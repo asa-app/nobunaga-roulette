@@ -72,12 +72,23 @@
     toastTimer=setTimeout(()=>el.classList.remove("show"),2200);
   }
   function color(num){return num==="0"||num==="00"?"green":RED.has(+num)?"red":"black"}
+  // Consume only the compatibility click belonging to a handled touch/pen bet.
+  // A new pointer gesture immediately releases the guard, including rapid taps.
+  let handledEdgeTap = false;
+  document.addEventListener("pointerdown",()=>{handledEdgeTap=false},true);
+  document.addEventListener("click",event=>{
+    if(!handledEdgeTap || event.detail===0)return;
+    handledEdgeTap=false;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  },true);
   function makeButton(parent, label, def, className=""){
     const b=document.createElement("button");b.type="button";b.textContent=label;b.dataset.baseLabel=label;b.className=className;
     b.setAttribute("aria-label",def.label+"、配当 "+def.odds+"対1");
     b.dataset.key=def.key;
     if(className.includes("edge-button") || className.includes("zero-split")){
       b.addEventListener("pointerdown",e=>{
+        if(e.pointerType==="touch" || e.pointerType==="pen")handledEdgeTap=true;
         e.preventDefault();
         e.stopPropagation();
         place(def.key);
