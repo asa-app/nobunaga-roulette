@@ -1,0 +1,2282 @@
+:root{color-scheme:dark;--ink:#100b08;--gold:#f1cc73;--gold-deep:#a66b24;--cream:#fff2d0;--paper:#e9dabb;--red:#a91722;--green:#066748;--black:#191819;font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#100b08;color:var(--cream)}button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}button:focus-visible{outline:3px solid #fff;outline-offset:2px}button:disabled{cursor:not-allowed;filter:grayscale(.75);opacity:.55}button:active:not(:disabled){transform:translateY(1px)}.game{position:relative;width:100vw;height:100dvh;min-height:300px;overflow:hidden;background:#140d07}.screen{position:absolute;inset:0;display:none;overflow:hidden;background-size:cover;background-position:center}.screen.active{display:block}.title-screen{background-image:url("./assets/title.png")}.title-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,9,16,.87) 0%,rgba(13,10,15,.56) 33%,transparent 64%)}.title-content{position:absolute;left:5.2%;top:14%;width:42%;text-shadow:0 3px 9px #160803}.title-kicker{font-size:clamp(12px,1.3vw,24px);letter-spacing:.34em;color:var(--gold);font-weight:700}.title-content h1{font-size:clamp(40px,5.9vw,105px);line-height:1.08;margin:3% 0 1%;letter-spacing:.04em;color:#fff0c2;text-shadow:0 3px #9a5b15,0 5px 16px #000}.title-content h1 em{font-style:normal;color:#ffdb80}.title-sub{font-size:clamp(14px,2.1vw,36px);margin-bottom:5%;letter-spacing:.12em}.title-action{min-width:68%;padding:1.3% 5%;font-size:clamp(18px,2.3vw,40px)}.title-action span{font:1.4em sans-serif;margin-left:.4em}.story-action{display:block;margin-top:2.3%;min-width:68%;padding:1.3% 4%;font-size:clamp(15px,1.6vw,29px)}.story-action small{font-size:.65em;color:#ffe1a0}.title-foot{position:absolute;left:5%;bottom:3%;color:#dfcfad;font-size:clamp(11px,1.15vw,18px);letter-spacing:.1em}
+.action-button{border:2px solid #f8df9a;color:#fff6d2;border-radius:9px;background:linear-gradient(180deg,#a41d1b,#6c1015);box-shadow:0 0 0 3px #682f11,inset 0 2px 6px #e17f3b,0 8px 20px #120500;text-shadow:0 2px #460503;font-weight:900}.action-button:hover:not(:disabled){filter:brightness(1.2)}.outline-button{color:#f6dfaa;border:2px solid var(--gold);border-radius:7px;background:rgba(10,9,10,.83);font-weight:700}.outline-button:hover{background:#3b2518}.story-screen{background-image:url("./assets/story.png")}.story-hotspot{position:absolute;left:30%;bottom:6%;width:40%;height:17%;border:0;background:transparent}.story-back{position:absolute;left:2%;top:3%;border:1px solid var(--gold);background:#160e0ddc;color:#ffdf93;padding:.5% 1.3%;font-size:clamp(13px,1.1vw,20px);border-radius:4px}
+.bet-screen{background-image:url("./assets/bet.png")}.bet-screen:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,12,8,.15),transparent 35%),linear-gradient(90deg,rgba(0,20,12,.25),transparent 71%);pointer-events:none}.game-header{position:absolute;z-index:3;left:1.5%;top:1%;width:97%;height:12%;display:flex;align-items:center;gap:2%;justify-content:space-between}.brand{font-size:clamp(24px,3.25vw,60px);line-height:1;color:#ffe5a4;font-weight:900;text-shadow:0 3px 3px #2e0d05,0 0 18px #000}.brand small{display:block;margin-top:4px;font-size:.28em;letter-spacing:.16em;color:#fff0c7}.header-actions{display:flex;gap:.5%;align-items:center;justify-content:flex-end;width:72%;height:100%}.top-button{border:1px solid #e2bd6b;background:#160f0de8;color:#fff0c9;padding:.25% 1%;height:70%;min-width:13%;border-radius:5px;box-shadow:0 1px 5px #000,inset 0 0 7px #644324;font-size:clamp(12px,1.1vw,20px);white-space:nowrap;font-weight:700}.top-button small{display:block;font-size:.7em;color:#d6aa67}.top-button:hover{background:#533019}.bet-layout{position:absolute;inset:14% 1.6% 1.8%;display:flex;gap:1.5%;align-items:stretch}.table-area{width:70%;height:100%;padding:1% 1.15%;background:linear-gradient(165deg,#07523acb,#022418c9);border:2px solid #d7ad5c;border-radius:12px;box-shadow:inset 0 0 0 3px #65441b,inset 0 0 25px #03170d,0 3px 16px #0009;display:flex;flex-direction:column;gap:.6%;position:relative}.board{height:55%;display:grid;grid-template-columns:7% 1fr 6%;gap:.45%;min-height:0}.zero-zone{display:grid;grid-template-rows:1fr 1fr;gap:2px}.zero-zone button,.columns button{border:1px solid #f3d595;background:#057352;color:white;font-size:clamp(16px,2vw,30px);font-weight:bold}.zero-zone button:first-child{border-radius:12px 0 0 0}.zero-zone button:last-child{border-radius:0 0 0 12px}.columns{display:grid;grid-template-rows:repeat(3,1fr);gap:2px}.columns button{font-size:clamp(9px,.9vw,17px);background:#064832}.number-area{position:relative;min-width:0}.number-grid{height:100%;width:100%;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:2px}.number-grid button{position:relative;min-width:0;padding:0;border:1px solid #eed79a;color:white;font-family:Georgia,serif;font-size:clamp(13px,1.75vw,32px);font-weight:700;text-shadow:0 2px #0009}.number-grid button.red{background:#b71924}.number-grid button.black{background:#171719}.number-grid button:hover,.outside-row button:hover,.dozen-row button:hover{filter:brightness(1.35)}.edge-layer{position:absolute;inset:0;pointer-events:none}.edge-button{pointer-events:auto;position:absolute;width:clamp(17px,2vw,31px);height:clamp(17px,2vw,31px);transform:translate(-50%,-50%);border:1px solid #ecb962;background:#e7bd7890;color:#251304;padding:0;border-radius:50%;z-index:2;font-size:clamp(11px,1.25vw,21px);line-height:1;opacity:.8;box-shadow:0 1px 3px #111}.edge-button.corner{background:#ffe0a7cf;z-index:3}.edge-button:hover{background:#fff5b5;opacity:1;scale:1.12}.edge-button:focus-visible{opacity:1}.edge-button:active{transform:translate(-50%,-50%)}.dozen-row,.outside-row{display:grid;gap:2px;min-height:0}.dozen-row{grid-template-columns:repeat(3,1fr);height:9%;margin-left:7%;margin-right:6%}.outside-row{grid-template-columns:repeat(6,1fr);height:10%;margin-left:7%;margin-right:6%}.dozen-row button,.outside-row button{min-width:0;border:1px solid #e7bd72;background:#063a2bdf;color:#ffebb4;font-size:clamp(11px,1.15vw,21px);font-weight:700;white-space:nowrap;padding:0}.outside-row button.red{background:#a81925;color:white}.outside-row button.black{background:#161619;color:white}.bet-sidebar{position:relative;width:28.5%;margin-top:27%;height:73%;padding:.5% .7%;display:flex;flex-direction:column;gap:2.5%;background:linear-gradient(180deg,#0c0b0bde,#110a0bea);border:2px solid #d5a54e;border-radius:9px;box-shadow:inset 0 0 0 3px #362010,0 5px 20px #0009}.bankroll-box{text-align:center;height:19%;display:flex;justify-content:center;align-items:baseline;gap:.4em;color:#fff1be;font-size:clamp(13px,1.4vw,26px);white-space:nowrap}.bankroll-box strong{font:700 clamp(20px,3.1vw,55px) Georgia,serif;color:#ffdc82}.bankroll-box small{font-size:.75em}.money-button{height:17%;min-height:0;border:2px solid #efcd75;background:#73170d;color:#ffe6a8;font-size:clamp(13px,1.5vw,27px);font-weight:800;border-radius:5px;box-shadow:inset 0 0 10px #e26422}.money-button small{font-size:.55em;margin-left:.3em;white-space:nowrap}.chip-picker{height:19%;display:flex;align-items:center;justify-content:space-around;gap:2%}.chip{min-width:0;height:80%;color:#2c1409;font:700 clamp(11px,1.2vw,22px) Georgia,serif;border:2px solid #e7ca8e;box-shadow:inset 0 0 4px #fff,0 2px 7px #000;border-radius:50%;flex:1}.chip.copper{background:radial-gradient(circle,#ffc783,#9f5429 80%)}.chip.silver{background:linear-gradient(130deg,#edf1f3,#79909b,#dce4e8);border-radius:12%}.chip.gold{background:linear-gradient(130deg,#fff4ad,#b87714,#ffcf52);border-radius:48%}.chip.selected{outline:3px solid #fff;outline-offset:3px;filter:brightness(1.1)}.bet-summary{height:14%;display:flex;align-items:center;justify-content:space-around;border:1px solid #d5aa59;background:#090909eb;color:#fff1cc;font-size:clamp(11px,1vw,20px);border-radius:4px}.bet-summary small{font-size:.75em}.spin-start{height:20%;font-size:clamp(18px,2.15vw,38px)}.coin-rain{pointer-events:none;position:absolute;inset:0;overflow:hidden;z-index:8}.fall-coin{position:absolute;top:-12%;font-size:clamp(19px,2vw,37px);color:#ffdf63;text-shadow:0 0 10px #fff3b4,0 4px 7px #6d2806;animation:coinfall 1.4s ease-in forwards}@keyframes coinfall{to{top:91%;transform:rotate(520deg);opacity:0}}
+.wheel-screen{background-image:url("./assets/spin.png")}.wheel-screen.win{background-image:url("./assets/win.png")}.wheel-screen.lose{background-image:url("./assets/lose.png")}.wheel-disk{position:absolute;z-index:2;left:1.5%;top:8%;height:min(86vh,56vw);width:min(86vh,56vw);filter:drop-shadow(0 7px 11px #100300)}.wheel-disk canvas{display:block;width:100%;height:100%}.spin-stake{position:absolute;right:2%;bottom:3%;padding:.65% 1.1%;background:#100a09e8;border:1px solid var(--gold);font-size:clamp(12px,1.2vw,22px)}.result-panel{position:absolute;z-index:4;right:1.7%;bottom:2.5%;width:40%;height:58%;padding:1% 1.7%;display:flex;flex-direction:column;justify-content:space-around;align-items:center;text-align:center;background:linear-gradient(180deg,#0e0c11ed,#210d0fe8);border:3px solid #eac26c;border-radius:10px;box-shadow:0 0 0 4px #381d0e,0 0 25px #1a0c02}.result-panel[hidden]{display:none}.result-number{font-size:clamp(16px,1.6vw,30px);color:#fff0c4}.result-number .result-ball{font-family:Georgia,serif;font-size:1.4em;font-weight:bold;padding:0 .3em;background:#161619;border:2px solid #f0d687;border-radius:5px}.result-number .result-ball.red{background:#ab1926}.result-number .result-ball.green{background:#086b4c}.result-title{line-height:1.1;font-size:clamp(31px,4vw,70px);font-weight:900;color:#ffdb82;text-shadow:0 3px #84410e,0 0 13px #b9731d}.wheel-screen.lose .result-title{color:#d7e2ff;text-shadow:0 2px #43547c}.result-net{font-family:Georgia,"Yu Mincho",serif;font-size:clamp(29px,3.5vw,63px);font-weight:800;color:#ffe3a2;white-space:nowrap}.wheel-screen.lose .result-net{color:#eee6df}.result-balance{font-size:clamp(13px,1.3vw,24px);color:#e8dab9}.next-round{width:80%;height:20%;font-size:clamp(18px,2vw,38px)}.wheel-screen.result .wheel-disk{height:min(73vh,50vw);width:min(73vh,50vw);top:14%}.wheel-screen.result .spin-stake{display:none}
+.modal-backdrop{position:absolute;z-index:15;inset:0;display:flex;align-items:center;justify-content:center;background:#080706b8}.modal-backdrop[hidden]{display:none}.paper-modal{width:min(96vw,1550px);height:92dvh;min-height:280px;display:flex;flex-direction:column;color:#261c15;border:4px solid #9b702f;border-radius:7px;box-shadow:inset 0 0 0 6px #e7c474,0 12px 40px #000;background:repeating-linear-gradient(30deg,#eadbb9 0px,#eadbb9 2px,#e8d7b4 3px,#e8d7b4 5px);padding:1.5% 2%}.modal-header{height:15%;flex:none;border-bottom:2px solid #8c602a;display:flex;justify-content:space-between;align-items:center}.modal-eyebrow{font-size:clamp(11px,1vw,18px);color:#6d4526}.modal-header h2{font-size:clamp(23px,2.6vw,46px);margin:0}.modal-body{flex:1;overflow-y:auto;min-height:0;scrollbar-color:#926333 #f5e6c5;scrollbar-width:auto;padding:1.2% 0;font-size:clamp(13px,1.2vw,22px)}.modal-footer{height:13%;flex:none;display:flex;align-items:center;justify-content:space-between;border-top:2px solid #8c602a;gap:2%}.paper-button{background:#513820;border:1px solid #946b37;color:#fff1d5;padding:.4em 1em;font-size:clamp(14px,1.25vw,22px);border-radius:5px}.paper-button.danger{background:#812a1c}.wager-list{display:grid;grid-template-columns:1fr 1fr;gap:1% 2%;align-content:start}.wager-line{min-height:clamp(42px,6vh,70px);display:flex;align-items:center;justify-content:space-between;gap:2%;padding:.3em .6em;border:1px solid #a68960;background:#f6ead0cf;border-radius:4px}.wager-line .wager-label{font-size:clamp(13px,1.25vw,22px);font-weight:700}.wager-line .wager-value{margin-left:auto;white-space:nowrap;font-family:Georgia,serif}.wager-line button{border:1px solid #84522e;background:#fff6df;color:#482a15;padding:.3em .6em;border-radius:4px;white-space:nowrap;font-size:clamp(12px,1vw,19px)}.empty-note{text-align:center;padding:5% 0;color:#674732}.ledger-toolbar{display:flex;justify-content:space-between;align-items:center;gap:2%;margin-bottom:1%}.ledger-toolbar strong{font-size:clamp(15px,1.3vw,23px)}.ledger-tabs{display:flex;gap:.4em}.ledger-tabs button{border:1px solid #7b5431;padding:.25em .7em;background:#fff5dd;color:#51331c;border-radius:4px}.ledger-tabs button.selected{background:#4b3524;color:#fff6da}.ledger-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 3%;}.ledger-item{display:grid;grid-template-columns:15% 1fr 16%;align-items:center;gap:2%;border-bottom:1px solid #bba278;min-height:clamp(27px,4vh,42px);font-size:clamp(13px,1.1vw,20px)}.ledger-item .bar-track{height:40%;background:#d4bf98;border-radius:3px}.ledger-item .bar-fill{height:100%;min-width:2px;background:#3a3530;border-radius:3px}.ledger-item .bar-fill.zero{width:0;min-width:0}.ledger-item .count{text-align:right;font-family:Georgia,serif}.stat-symbol{font-weight:900;margin-right:.25em}.stat-symbol.red{color:#aa151e}.stat-symbol.black{color:#171514}.stat-symbol.green{color:#006c4b}.recent-draws{display:flex;flex-wrap:wrap;gap:.4em;margin:1% 0 2%}.recent-draws span{background:#fbf1db;border:1px solid #bcaa8b;padding:.2em .5em;border-radius:4px}.rules-layout{display:grid;grid-template-columns:1fr 1fr;gap:3%;line-height:1.55}.rules-layout h3{font-size:clamp(17px,1.6vw,28px);border-bottom:1px solid #9c713f;margin:.5em 0}.rules-layout p{margin:.5em 0}.rules-layout ul{padding-left:1.4em;margin:.5em 0}.rules-table{width:100%;border-collapse:collapse}.rules-table th,.rules-table td{border-bottom:1px solid #c2a87b;text-align:left;padding:.22em .4em}.rules-table th:last-child,.rules-table td:last-child{text-align:right;font-weight:700}.rules-foot{font-size:.88em;color:#594126;padding-top:.4em}.toast{position:absolute;z-index:30;left:50%;bottom:3%;transform:translateX(-50%) translateY(20px);padding:.55em 1.2em;background:#17120be8;border:1px solid var(--gold);border-radius:4px;color:#fff2cc;opacity:0;pointer-events:none;font-size:clamp(14px,1.4vw,24px);transition:opacity .2s,transform .2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.zero-zone{position:relative}.zero-zone .zero-split{position:absolute;left:50%;top:50%;width:clamp(18px,1.6vw,26px);height:clamp(18px,1.6vw,26px);transform:translate(-50%,-50%);border:none;background:transparent;color:#fff2d6;z-index:5;font-size:clamp(12px,1vw,16px);line-height:1;text-shadow:0 1px 3px #000,0 0 4px #000;box-shadow:none;padding:0}.zero-zone .zero-split:hover,.zero-zone .zero-split:focus-visible{background:transparent;outline:2px solid #ffe6a8;outline-offset:2px}.board{height:51%}
+.bet-sidebar{position:absolute;right:0;top:27%;margin-top:0;height:73%}
+@media (max-height:430px) and (orientation:landscape){.brand{font-size:clamp(21px,2.9vw,34px)}.top-button span{font-size:clamp(11px,1.2vw,16px)}.table-area{padding:.6%}.board{height:53%}.bet-sidebar{top:24%;height:76%}.modal-header{height:17%}.modal-footer{height:14%}}
+/* Landscape phone browsers often reserve large bars above and below the page. */
+@media (max-height:550px) and (orientation:landscape){
+  .title-screen{overflow-y:auto;overscroll-behavior:contain}
+  .title-content{position:relative;left:auto;top:auto;width:46%;margin:2vh 0 0 5.2%;padding-bottom:1vh}
+  .title-kicker{font-size:clamp(11px,2.8vh,17px);letter-spacing:.22em}
+  .title-content h1{font-size:clamp(30px,min(5vw,15vh),72px);line-height:1.02;margin:.04em 0}
+  .title-sub{font-size:clamp(13px,3.5vh,23px);margin-bottom:1.6vh}
+  .title-action{min-height:10vh;padding:.15em .65em;font-size:clamp(16px,4.5vh,26px)}
+  .story-action{min-height:9vh;padding:.1em .65em;margin-top:1.5vh;font-size:clamp(13px,3.5vh,20px)}
+  .title-foot{position:relative;left:auto;bottom:auto;margin:1vh 0 1vh 5.2%;font-size:clamp(10px,2.5vh,15px)}
+}
+
+/* Keep the actual game surface isolated when changing scenes. */
+.screen:not(.active){display:none!important}
+.wheel-screen.active{z-index:2}
+.wheel-disk svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 6px 7px #100500)}
+.story-back{top:auto;left:2%;bottom:3%;z-index:3}
+
+/* The three denominations keep their shape on the table as well as in the tray. */
+.chip-picker .chip{flex:none;height:78%;padding:0 3px;text-shadow:0 1px #fff8;box-shadow:inset 0 0 0 3px #ffffff46,inset 0 0 0 5px #4b30184d,0 3px 7px #000;position:relative}
+.chip-picker .chip:before,.fall-coin:before{content:"";position:absolute;inset:4px;border:1px solid #fff9;border-radius:inherit;pointer-events:none}
+.chip-picker .chip.copper{width:23%;height:76%;border-radius:50%;border:3px ridge #a45d37;background:radial-gradient(circle at 30% 25%,#ffd6a0 0%,#c58048 32%,#8e461e 66%,#e6ac67 83%,#874220 100%)}
+.chip-picker .chip.silver{width:29%;height:73%;border-radius:7px;border:3px ridge #b1bec4;background:linear-gradient(145deg,#fff,#97a7ab 30%,#e8eeee 50%,#7e939d 75%,#e8f1f2)}
+.chip-picker .chip.gold{width:39%;height:84%;border-radius:50%;border:3px ridge #e8af46;background:linear-gradient(130deg,#fff4ae,#c38620 24%,#ffe289 48%,#aa6712 78%,#f8c450)}
+.chip-picker .chip.selected{outline:3px solid #fff;outline-offset:2px;filter:brightness(1.15)}
+.number-grid button,.zero-zone button,.columns button,.dozen-row button,.outside-row button{position:relative}
+.edge-button{width:clamp(17px,1.55vw,24px);height:clamp(17px,1.55vw,24px);background:#f6dba9e5;opacity:1;border:2px solid #5d3718;font-weight:900;box-shadow:0 1px 3px #000,0 0 0 1px #fce6a5}
+.edge-button.corner{background:#fff0c3;z-index:3}
+.number-grid button.has-wager,.zero-zone button.has-wager,.columns button.has-wager,.dozen-row button.has-wager,.outside-row button.has-wager{outline:3px solid #fff1a0;outline-offset:-4px;box-shadow:inset 0 0 13px #ffde75,0 0 10px #ffdb70}
+.edge-button.has-wager{background:#fff;box-shadow:0 0 0 3px #fff1a0,0 0 13px #fff7bd}
+@keyframes coinland{from{transform:scale(1.8);opacity:.25}to{transform:scale(1);opacity:1}}
+.fall-coin{width:clamp(30px,3vw,51px);height:clamp(17px,1.6vw,29px);display:flex;align-items:center;justify-content:center;font:bold clamp(12px,1.2vw,20px) serif;border:2px ridge #ffdf84;border-radius:50%;background:linear-gradient(120deg,#ffeaae,#b5740c,#ffdd64);box-shadow:0 3px 7px #150601;top:-12%;animation:coinfall 1.4s ease-in forwards}
+.fall-coin.homing{animation:coinhome 1.8s cubic-bezier(.2,.8,.35,1) forwards}
+@keyframes coinhome{0%{transform:translate(0,0) rotate(0);opacity:1}50%{transform:translate(0,35vh) rotate(330deg);opacity:1}100%{transform:translate(var(--coin-x),var(--coin-y)) rotate(680deg) scale(.3);opacity:0}}
+
+@media (orientation:portrait) and (max-width:900px){
+  .title-screen{background-position:61% center}
+  .title-shade{background:linear-gradient(0deg,#08080bef 0%,#0a0a0bc9 42%,#0a0a0b14 83%)}
+  .title-content{left:6%;top:auto;bottom:9%;width:88%;text-align:center}
+  .title-kicker{font-size:clamp(12px,3vw,20px)}
+  .title-content h1{font-size:clamp(43px,11vw,76px);line-height:1.12;margin:.2em 0}
+  .title-sub{font-size:clamp(15px,4vw,27px);margin-bottom:.9em}
+  .title-action,.story-action{width:100%;padding:.55em .3em;margin-top:.6em;font-size:clamp(19px,5vw,27px)}
+  .story-action{font-size:clamp(15px,4vw,24px)}
+  .title-foot{left:0;right:0;bottom:2%;text-align:center;font-size:12px}
+}
+
+/* Revised layout: isolate each scene so prior bets cannot paint above the wheel. */
+html,body,.game{font-family:"Noto Sans CJK JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif}
+.title-content h1,.brand,.result-title{font-family:"Hiragino Mincho ProN","Yu Mincho",serif}
+.screen{isolation:isolate}
+.screen[hidden],.screen:not(.active){display:none!important;visibility:hidden!important}
+.bet-screen{z-index:0;contain:paint}
+.wheel-screen{z-index:10;contain:paint}
+.game-header{width:96%;left:1.5%;height:12%}
+.brand{font-size:clamp(22px,2.8vw,47px)}
+.header-actions{position:absolute;top:0;left:32%;width:38%;height:100%;justify-content:flex-start;gap:2%}
+.header-actions .top-button{height:68%;width:49%;min-width:0;padding:0 .45em;font-size:clamp(12px,1.3vw,20px)}
+.bet-layout{inset:14% 1.6% 1.8%}
+.board{height:61%}
+.range-row,.dozen-row,.outside-row{display:grid;min-height:0;gap:2px;margin-left:7%;margin-right:6%}
+.range-row{height:8%;grid-template-columns:repeat(2,minmax(0,1fr))}
+.dozen-row{height:9%;grid-template-columns:repeat(3,minmax(0,1fr))}
+.outside-row{height:10%;grid-template-columns:repeat(4,minmax(0,1fr))}
+.range-row button,.dozen-row button,.outside-row button{position:relative;min-width:0;padding:0 2px;background:#063a2bdf;border:1px solid #e7bd72;color:#fff1d1;font-size:clamp(12px,1.3vw,21px);font-weight:600}
+.outside-row button.red{background:#a81925}.outside-row button.black{background:#161619}
+.range-row button.has-wager{outline:3px solid #fff1a0;outline-offset:-4px;box-shadow:inset 0 0 13px #ffde75,0 0 10px #ffdb70}
+.number-grid button{font-family:Arial,"Noto Sans CJK JP",sans-serif;font-weight:600}
+.number-grid button.red:before,.number-grid button.black:before{position:absolute;top:2px;left:3px;color:#fff;font:700 clamp(7px,.8vw,11px) sans-serif}
+.number-grid button.red:before{content:"●"}.number-grid button.black:before{content:"◆"}
+.edge-button{min-width:23px;min-height:23px;width:clamp(23px,1.75vw,30px);height:clamp(23px,1.75vw,30px);touch-action:manipulation;z-index:4}
+.edge-button.corner{z-index:5}
+.wager-layer{position:absolute;inset:0;z-index:8;pointer-events:none;overflow:visible}
+.bankroll-box{height:16%;font-weight:500}
+.bankroll-box strong{font:600 clamp(19px,2.45vw,41px) Arial,"Noto Sans CJK JP",sans-serif}
+.bet-sidebar{gap:1.2%}
+.chip-picker{height:23%;align-items:stretch;gap:1.2%}
+.chip-picker .chip{width:32%;height:100%;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;position:relative;padding:0 1px;border:0;border-radius:4px!important;background:transparent!important;color:#ffebbc;text-shadow:0 1px 3px #000;box-shadow:none!important;outline:none;filter:none}
+.chip-picker .chip:before{content:none}
+.chip-picker .chip.selected{background:#fff3bb1f!important;box-shadow:inset 0 0 0 2px #fff6bb!important}
+.coin-art{position:relative;display:flex;align-items:center;justify-content:center;width:73%;height:62%;max-height:50px;border:3px ridge #a45d37;border-radius:50%;background:radial-gradient(circle at 30% 25%,#f6d3a1,#b4743b 44%,#78390e 72%,#e9af68);box-shadow:inset 0 0 0 3px #572b1288,inset 0 0 0 6px #f5c38699,0 3px 6px #000;color:#522b10;font:700 clamp(11px,1.2vw,21px) serif}
+.coin-art:after{content:"";position:absolute;inset:4px;border:1px solid #fff8;border-radius:inherit;pointer-events:none}
+.chip.silver .coin-art{width:82%;height:61%;border:3px ridge #b6c5c8;border-radius:5px;background:linear-gradient(145deg,#fefefe,#929da2 28%,#e3eaeb 50%,#809097 74%,#d9e1e5);box-shadow:inset 0 0 0 3px #535b62aa,inset 0 0 0 5px #ffffff66,0 3px 6px #000;color:#39434b}
+.chip.gold .coin-art{width:91%;height:67%;border:3px ridge #d6a03e;border-radius:50%;background:linear-gradient(130deg,#fff7ad,#b6780d 27%,#ffe38f 48%,#a35c07 80%,#ffdb71);box-shadow:inset 0 0 0 3px #7a3f1599,inset 0 0 0 6px #ffefaa88,0 3px 6px #000;color:#5e3909}
+.chip.selected .coin-art{filter:brightness(1.16)}
+.fall-coin.homing{animation:coinhome-direct 1.6s cubic-bezier(.38,.02,.7,1) forwards}
+@keyframes coinhome-direct{0%{transform:translate(0,0) rotate(0) scale(1);opacity:1}100%{transform:translate(var(--coin-x),var(--coin-y)) rotate(540deg) scale(.25);opacity:0}}
+.wheel-disk{left:1%;top:3%;height:min(94vh,57vw);width:min(94vh,57vw)}
+.wheel-screen.result .wheel-disk{left:1%;top:9%;height:min(82vh,51vw);width:min(82vh,51vw)}
+.spin-stake{right:2%;bottom:2%;z-index:12;font-size:clamp(12px,1.2vw,20px)}
+.result-number .result-ball,.result-net,.wager-line .wager-value{font-family:Arial,"Noto Sans CJK JP",sans-serif}
+.settings-menu{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2%;padding:2% 0;align-items:start}
+.settings-item{min-height:clamp(110px,20vh,180px);border:2px solid #9c713d;border-radius:8px;background:#f9efd8;color:#352316;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5em;padding:1em;text-align:center}
+.settings-item strong{font-size:clamp(16px,1.75vw,28px)}.settings-item small{font-size:clamp(12px,1.15vw,19px)}
+.settings-item[aria-pressed="true"]{background:#e7f0df;border-color:#34614c}
+@media (max-height:430px) and (orientation:landscape){.board{height:61%}.header-actions .top-button{height:73%;font-size:clamp(11px,1.45vw,17px)}.coin-art{max-height:32px}.chip-picker{height:23%}}
+
+/* The mark is a small hint; its transparent button and the entire line remain tappable. */
+.number-area{touch-action:manipulation}
+.edge-button,.edge-button.corner,.edge-button.has-wager,.edge-button:hover{
+  width:clamp(30px,2.4vw,42px);height:clamp(30px,2.4vw,42px);
+  min-width:30px;min-height:30px;opacity:1;background:transparent;
+  border:0;box-shadow:none;filter:none;scale:1;font-size:0;
+}
+.edge-button:after{content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;
+  transform:translate(-50%,-50%);border:1px solid #fff2be;border-radius:50%;
+  background:#68371b;box-shadow:0 1px 2px #000}
+.edge-button.corner:after{width:8px;height:8px;border-radius:1px;
+  transform:translate(-50%,-50%) rotate(45deg)}
+.edge-button.has-wager:after{opacity:0}
+
+/* Coins stay in the wagered cell; line bets sit exactly on their line. */
+.number-grid button.has-wager{display:flex;align-items:flex-end;justify-content:center;padding-bottom:3px}
+.number-grid button.has-wager,.range-row button.has-wager,.dozen-row button.has-wager,
+.outside-row button.has-wager,.columns button.has-wager,.zero-zone button.has-wager{z-index:2}
+
+/* Give the board the room previously used by its frame and instructions. */
+.game-header{top:.7%;height:8.5%}
+.brand{font-size:clamp(18px,2.2vw,33px);line-height:1.1}
+.header-actions{top:0;left:27%;width:37%;gap:2%}
+.header-actions .top-button{width:49%;height:72%;font-size:clamp(10px,1.05vw,16px)}
+.bet-layout{inset:9.3% 1% 1%}
+.table-area{width:75%;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;gap:.8%}
+.board{height:66.5%}
+.range-row{height:10%}.dozen-row{height:10%}.outside-row{height:11%}
+.bet-sidebar{width:23.5%;top:26%;height:74%;gap:1%}
+.bankroll-box{height:13%;font-size:clamp(11px,1.13vw,20px)}
+.bankroll-box strong{font-size:clamp(17px,2vw,32px)}
+.money-button{height:16%;font-size:clamp(12px,1.28vw,23px)}.chip-picker{height:22%}
+.bet-summary{height:13%;font-size:clamp(11px,.95vw,18px)}
+.spin-start{height:20%;font-size:clamp(17px,1.8vw,30px)}
+
+/* Each denomination has its own outline and engraving, with no writing on it. */
+.chip-picker .chip{justify-content:center;min-height:0}
+.chip-picker .chip.selected{outline:2px solid #fff6c6!important;outline-offset:-2px}
+.coin-art{width:58%;height:67%;max-height:none;border-radius:50%;border:3px ridge #ad6935;
+  background:radial-gradient(circle at 34% 26%,#ffd9a2,#a95d32 69%,#6b361b);
+  box-shadow:inset 0 0 0 3px #6b361b,inset 0 0 0 6px #f3bc7d9e,0 2px 6px #000}
+.coin-art:before{content:"";position:absolute;left:50%;top:50%;width:17%;height:22%;
+  transform:translate(-50%,-50%);background:#321a12;border:1px solid #ffe3ae;box-shadow:inset 1px 1px 2px #070503}
+.coin-art:after{inset:6px;border:1px dotted #ffe1ad;box-shadow:none}
+.chip.silver .coin-art{width:78%;height:60%;border-radius:4px;
+  background:linear-gradient(150deg,#fff,#8a9ba3 29%,#eff2f1 47%,#7d8b93 77%,#e4e9e9)}
+.chip.silver .coin-art:before{width:68%;height:49%;border:1px double #5c6b70;border-radius:2px;
+  background:repeating-linear-gradient(90deg,transparent 0 5px,#6b79803b 6px 7px);box-shadow:inset 0 0 0 2px #eef2f2a8}
+.chip.silver .coin-art:after{inset:4px;border:1px solid #f5f7f7}
+.chip.gold .coin-art{width:96%;height:64%;border-radius:50%;
+  background:linear-gradient(125deg,#fff4ae,#c18424 29%,#ffe28a 52%,#a56813 84%,#ffe09a)}
+.chip.gold .coin-art:before{width:70%;height:60%;border:1px dotted #874815;border-radius:50%;
+  background:repeating-linear-gradient(90deg,#ffe49f00 0 6px,#ffedb955 7px 8px);box-shadow:none}
+.chip.gold .coin-art:after{inset:5px;border:1px solid #fff0b6}
+
+/* One compact, picture-only bundle is anchored to each precise betting point. */
+.wager-stack{position:absolute;width:30px;height:21px;pointer-events:none;z-index:9;
+  filter:drop-shadow(0 2px 2px #130902)}
+.edge-stack{transform:translate(-50%,-50%)}
+.cell-stack{top:2px;left:50%;transform:translateX(-50%)}
+.range-row .cell-stack,.dozen-row .cell-stack,.outside-row .cell-stack,
+.columns .cell-stack,.zero-zone button:not(.zero-split) .cell-stack{
+  left:auto;right:3px;top:50%;transform:translateY(-50%);
+}
+.coin-piece{position:absolute;top:48%;width:15px;height:15px;transform:translate(-50%,-50%);
+  border:2px ridge #bf7841;border-radius:50%;background:radial-gradient(circle at 30% 24%,#ffe0ac,#9d5628 73%);
+  box-shadow:0 1px 2px #140907}
+.coin-piece.copper:after{content:"";position:absolute;left:50%;top:50%;width:4px;height:4px;
+  transform:translate(-50%,-50%);background:#352116;border:1px solid #f5c78d}
+.coin-piece.silver{width:17px;height:13px;border:2px ridge #9facb3;border-radius:2px;
+  background:linear-gradient(135deg,#fafdfd,#88989f 44%,#e6ebec)}
+.coin-piece.silver:after{content:"";position:absolute;inset:2px;border:1px solid #50647073}
+.coin-piece.gold{width:19px;height:13px;border:2px ridge #d69f3b;border-radius:50%;
+  background:linear-gradient(135deg,#fff3a6,#b77416 46%,#ffdf83)}
+.coin-piece.gold:after{content:"";position:absolute;inset:2px;border:1px dotted #925a16;border-radius:50%}
+.coin-piece.stacked{box-shadow:0 2px 0 #4b2b1b,0 4px 0 #d5b079,0 5px 3px #100705}
+.coin-piece.deep{box-shadow:0 2px 0 #4b2b1b,0 4px 0 #d5b079,0 6px 0 #745127,0 7px 3px #100705}
+.just-placed .wager-stack{animation:coinland .28s ease-out}
+.wager-detail{font-size:clamp(11px,1vw,17px);color:#634731;white-space:normal}
+.wager-line{flex-wrap:wrap}.wager-line .wager-label{min-width:35%}
+.wager-line .wager-detail{flex-basis:100%;order:4}
+@media (max-height:430px) and (orientation:landscape){
+  .board{height:66.5%}.bet-sidebar{top:26%;height:74%}
+  .chip-picker{height:22%}.header-actions .top-button{font-size:clamp(10px,1.05vw,15px)}
+}
+
+
+/* v8: coin art swap, wording cleanup, and board/side size rebalance */
+.game-header{top:.55%;height:8.2%}
+.brand{font-size:clamp(17px,2.05vw,31px)}
+.header-actions{left:30%;width:33%;gap:1.4%}
+.header-actions .top-button{height:68%;padding:.15% .8%;font-size:clamp(10px,1vw,15px)}
+.bet-layout{inset:8.8% .9% .9%;gap:1.1%}
+.table-area{width:76.4%}
+.board{height:68%}
+.range-row{height:9.3%}
+.dozen-row{height:9.3%}
+.outside-row{height:10.4%}
+.bet-sidebar{width:22.4%;top:24.2%;height:75.8%;padding:.35% .65%;gap:.8%}
+.bankroll-box{height:12.5%}
+.money-button{height:14.5%}
+.chip-picker{height:24.5%;gap:3%}
+.bet-summary{height:12.5%}
+.spin-start{height:18.5%}
+
+.chip-picker .chip{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:14px!important;
+  background:linear-gradient(180deg,#1f1511f2,#120b09f4)!important;border:1px solid #dfbc76!important;box-shadow:inset 0 0 0 2px #55361c,0 2px 8px #000a}
+.chip-picker .chip.selected{outline:2px solid #fff1c0!important;outline-offset:-2px;box-shadow:inset 0 0 0 2px #7c5725,0 0 0 2px #fff2b377,0 4px 12px #000c!important}
+.coin-art{position:relative;width:82%;height:88%;max-height:none;border:0!important;border-radius:0!important;background-color:transparent!important;
+  background-position:center;background-repeat:no-repeat;background-size:contain;box-shadow:none!important;filter:drop-shadow(0 2px 4px #0008)}
+.coin-art:before,.coin-art:after{content:none!important}
+.chip.copper .coin-art{width:73%;height:79%;background-image:url("./assets/coin100.png")!important}
+.chip.silver .coin-art{width:63%;height:88%;background-image:url("./assets/coin1000.png")!important}
+.chip.gold .coin-art{width:62%;height:90%;background-image:url("./assets/coin10000.png")!important}
+
+.wager-stack{width:34px;height:30px;filter:none}
+.cell-stack{top:0}
+.range-row .cell-stack,.dozen-row .cell-stack,.outside-row .cell-stack,.columns .cell-stack,.zero-zone button:not(.zero-split) .cell-stack{right:2px}
+.coin-piece{position:absolute;top:50%;transform:translate(-50%,-50%);border:0!important;border-radius:0!important;background-color:transparent!important;
+  background-position:center;background-repeat:no-repeat;background-size:contain;box-shadow:none!important;filter:drop-shadow(0 1px 1px #130902) drop-shadow(0 2px 3px #0009)}
+.coin-piece:after,.coin-piece:before{content:none!important}
+.coin-piece.copper{width:18px;height:18px;background-image:url("./assets/coin100.png")!important}
+.coin-piece.silver{width:16px;height:24px;background-image:url("./assets/coin1000.png")!important}
+.coin-piece.gold{width:17px;height:28px;background-image:url("./assets/coin10000.png")!important}
+.coin-piece.stacked{filter:drop-shadow(0 2px 0 #4b2b1b) drop-shadow(0 3px 1px #d5b079) drop-shadow(0 5px 3px #100705)}
+.coin-piece.deep{filter:drop-shadow(0 2px 0 #4b2b1b) drop-shadow(0 4px 0 #d5b079) drop-shadow(0 6px 0 #745127) drop-shadow(0 7px 3px #100705)}
+.edge-stack{transform:translate(-50%,-50%)}
+.edge-stack .coin-piece{top:48%}
+
+.spin-stake{padding:.55% 1%;font-size:clamp(12px,1.1vw,19px)}
+@media (max-height:430px) and (orientation:landscape){
+  .brand{font-size:clamp(16px,1.9vw,26px)}
+  .header-actions{left:28%;width:36%}
+  .table-area{width:76%}.bet-sidebar{width:22.8%;top:24.5%;height:75.5%}
+  .chip-picker{height:25%}
+}
+
+
+/* v9: compact play-first layout. Priority: betting ease, then Nobunaga visibility. */
+.game-header{left:1%;top:.35%;width:76%;height:7.2%;display:grid;grid-template-columns:18% 44% 38%;gap:1%;align-items:center}
+.brand{font-size:clamp(15px,1.75vw,27px);line-height:1;white-space:nowrap}
+.header-guide{color:#ffe9b2;text-align:center;font-weight:700;font-size:clamp(11px,1.05vw,17px);letter-spacing:.02em;text-shadow:0 2px 4px #2b0f08,0 0 8px #000}
+.header-actions{position:static;width:100%;height:100%;display:flex;justify-content:flex-end;gap:2%}
+.header-actions .top-button{width:48%;height:64%;min-width:0;padding:.08% .55%;font-size:clamp(9px,.85vw,14px);border-width:1px}
+.header-actions .top-button small{font-size:.62em;line-height:1}
+
+.bet-layout{inset:7.65% .8% .8%;gap:.9%}
+.table-area{width:76.9%}
+.board{height:68.6%}
+.range-row{height:9.2%}.dozen-row{height:9.2%}.outside-row{height:10.2%}
+
+/* Slightly stronger board lines for touch targeting without stealing board space. */
+.number-grid{gap:2px}
+.number-grid button,.zero-zone button,.columns button,.range-row button,.dozen-row button,.outside-row button{border-width:1.5px}
+.edge-button:after{border-width:1.5px}
+.edge-button.corner:after{border-width:1.5px}
+
+/* The right side no longer acts as one opaque black box. */
+.bet-sidebar{width:22.1%;top:39%;height:61%;margin:0;padding:.35% .45%;gap:1.3%;background:transparent;border:0;border-radius:0;box-shadow:none}
+.bankroll-box{height:11%;margin:0;border:1px solid #b98d4c;border-radius:7px;background:rgba(15,10,8,.48);backdrop-filter:blur(1px);font-size:clamp(10px,1vw,17px);box-shadow:0 2px 8px #0007}
+.bankroll-box strong{font-size:clamp(17px,1.9vw,30px)}
+.money-button{height:12%;min-height:0;border-width:1.5px;border-radius:6px;background:rgba(119,22,13,.72);font-size:clamp(11px,1.12vw,19px);box-shadow:inset 0 0 8px #d2582b77,0 2px 8px #0007}
+.chip-picker{height:28%;padding:2.5% 2%;gap:3%;border:1px solid #b98d4c;border-radius:8px;background:#100b09f2;box-shadow:inset 0 0 0 2px #382313,0 3px 10px #0009}
+.chip-picker .chip{height:92%;padding:2%;border-radius:9px!important;background:#1b120ff5!important}
+.coin-art{display:block;object-fit:contain;object-position:center;width:100%!important;height:100%!important;max-width:100%;max-height:100%;border:0!important;background:none!important;box-shadow:none!important;filter:drop-shadow(0 2px 3px #000c)}
+.chip.copper .coin-art{transform:scale(.58)}
+.chip.silver .coin-art{transform:scale(.79)}
+.chip.gold .coin-art{transform:scale(.89)}
+
+.bet-summary{height:12%;padding:0 5%;justify-content:flex-start;gap:.55em;border:1px solid #b98d4c;background:#0d0a08f5;font-size:clamp(12px,1.13vw,19px);white-space:nowrap}
+.bet-summary span{display:flex;align-items:baseline;gap:.32em}
+.bet-summary strong{font-size:1.12em;letter-spacing:.01em}
+.bet-summary small{margin-left:.15em;padding:.35em .65em;border:1px solid #c99b54;border-radius:5px;background:#2a1a10;color:#ffe8b3;font-size:.82em;line-height:1;box-shadow:inset 0 0 5px #6e4828,0 1px 4px #000}
+.bet-summary:hover small,.bet-summary:focus-visible small{background:#4a2d18}
+.spin-start{height:17%;min-height:0;font-size:clamp(15px,1.65vw,27px)}
+
+/* Board wager pieces use the same approved money art. */
+.coin-piece{display:block;object-fit:contain;object-position:center;background:none!important;border:0!important}
+.coin-piece.copper{width:19px;height:19px}
+.coin-piece.silver{width:17px;height:24px}
+.coin-piece.gold{width:18px;height:27px}
+.coin-piece:before,.coin-piece:after{content:none!important}
+
+@media (max-height:430px) and (orientation:landscape){
+  .game-header{height:7.4%;grid-template-columns:18% 43% 39%}
+  .brand{font-size:clamp(14px,1.65vw,23px)}
+  .header-guide{font-size:clamp(9px,.95vw,14px)}
+  .header-actions .top-button{font-size:clamp(8px,.78vw,12px)}
+  .bet-layout{inset:7.8% .7% .7%}
+  .table-area{width:77%}.board{height:68.7%}
+  .bet-sidebar{width:22%;top:39%;height:61%;gap:1%}
+  .bankroll-box{height:10.5%}.money-button{height:11.5%}.chip-picker{height:29%}.bet-summary{height:12%}.spin-start{height:17%}
+}
+
+/* v9.1 corrected: valid CSS, compact header/right controls, more Nobunaga visible */
+.game-header{
+  left:1%; top:.3%; width:75.8%; height:6.7%;
+  display:grid; grid-template-columns:17% 45% 38%; gap:1%; align-items:center;
+}
+.brand{font-size:clamp(14px,1.55vw,24px);line-height:1;white-space:nowrap}
+.header-guide{
+  color:#ffe9b2; text-align:center; font-weight:700;
+  font-size:clamp(10px,.95vw,16px); white-space:nowrap;
+  text-shadow:0 2px 4px #2b0f08,0 0 8px #000;
+}
+.header-actions{position:static;width:100%;height:100%;display:flex;justify-content:flex-end;gap:2%}
+.header-actions .top-button{
+  width:48%; height:58%; min-width:0; padding:0 .45em;
+  font-size:clamp(8px,.78vw,13px); border-width:1px;
+}
+.header-actions .top-button small{font-size:.6em;line-height:1}
+
+.bet-layout{inset:7.05% .8% .8%;gap:.85%}
+.table-area{width:76.9%}
+.board{height:69.2%}
+.range-row{height:9%}.dozen-row{height:9%}.outside-row{height:10%}
+
+.number-grid button,.zero-zone button,.columns button,.range-row button,.dozen-row button,.outside-row button{border-width:2px}
+.edge-button:after,.edge-button.corner:after{border-width:2px}
+
+.bet-sidebar{
+  width:22.1%; top:34%; height:66%; margin:0; padding:.25% .4%; gap:1%;
+  background:transparent; border:0; border-radius:0; box-shadow:none;
+}
+.bankroll-box{
+  height:9.5%; margin:0; border:1px solid #b98d4c; border-radius:6px;
+  background:rgba(15,10,8,.46); backdrop-filter:blur(1px);
+  font-size:clamp(10px,.92vw,16px); box-shadow:0 2px 8px #0007;
+}
+.bankroll-box strong{font-size:clamp(16px,1.72vw,28px)}
+.money-button{
+  height:10.5%; min-height:0; border-width:1.5px; border-radius:5px;
+  background:rgba(119,22,13,.70); font-size:clamp(10px,1.02vw,18px);
+  box-shadow:inset 0 0 8px #d2582b66,0 2px 8px #0007;
+}
+.chip-picker{
+  height:27%; padding:2% 2%; gap:3%; border:1px solid #b98d4c; border-radius:7px;
+  background:#100b09f4; box-shadow:inset 0 0 0 2px #382313,0 3px 10px #0009;
+}
+.chip-picker .chip{height:94%;padding:1.5%;border-radius:8px!important;background:#1b120ff5!important}
+.bet-summary{
+  height:10.5%; padding:0 4%; justify-content:flex-start; gap:.35em;
+  border:1px solid #b98d4c; background:#0d0a08f6;
+  font-size:clamp(12px,1.08vw,18px); white-space:nowrap;
+}
+.bet-summary span{display:flex;align-items:baseline;gap:.25em}
+.bet-summary strong{font-size:1.18em}
+.bet-summary small{
+  margin-left:.1em; padding:.32em .6em; border:1px solid #c99b54; border-radius:4px;
+  background:#2a1a10; color:#ffe8b3; font-size:.82em; line-height:1;
+  box-shadow:inset 0 0 5px #6e4828,0 1px 4px #000;
+}
+.spin-start{height:14.5%;min-height:0;font-size:clamp(14px,1.48vw,25px)}
+
+@media (max-height:430px) and (orientation:landscape){
+  .game-header{height:6.9%;grid-template-columns:17% 45% 38%}
+  .brand{font-size:clamp(13px,1.45vw,21px)}
+  .header-guide{font-size:clamp(9px,.86vw,13px)}
+  .header-actions .top-button{font-size:clamp(8px,.72vw,11px);height:58%}
+  .bet-layout{inset:7.15% .7% .7%}
+  .table-area{width:77%}.board{height:69.2%}
+  .bet-sidebar{width:22%;top:34%;height:66%;gap:.85%}
+  .bankroll-box{height:9%}.money-button{height:10%}.chip-picker{height:27.5%}.bet-summary{height:10%}.spin-start{height:14%}
+}
+
+
+/* v10: final micro-adjustments from layout review */
+:root{--control-red:#72190f;--control-red-hover:#8c2517;--control-gold:#ffe08a}
+
+/* Header ends exactly at the right edge of the betting table. */
+.game-header{
+  left:.8%; width:75.67%; height:6.7%;
+  grid-template-columns:14% 48% 38%; gap:1%;
+}
+.brand,.header-guide{
+  font-size:clamp(14px,1.55vw,24px);
+}
+.header-guide{
+  line-height:1.05; letter-spacing:.015em;
+}
+
+/* The lower edge of Nobunaga's control area aligns with the betting table. */
+.bet-sidebar{
+  top:34%; height:66%; box-sizing:border-box;
+}
+
+/* Shared action colour: summon money, change wager, and start roulette. */
+.money-button,
+.bet-summary small,
+.spin-start{
+  background:var(--control-red)!important;
+  border-color:#d5a54e!important;
+  color:var(--control-gold)!important;
+}
+.money-button:hover,
+.bet-summary:hover small,
+.bet-summary:focus-visible small,
+.spin-start:not(:disabled):hover{
+  background:var(--control-red-hover)!important;
+}
+
+/* Start button stays opaque; disabled state is shown by muted lettering, not transparency. */
+.spin-start{
+  opacity:1!important;
+  border:2px solid #d5a54e!important;
+  box-shadow:inset 0 0 9px #d75c2c66,0 2px 8px #0009!important;
+  text-shadow:0 2px 2px #3b0b06,0 0 6px #a95d15;
+  font-weight:900;
+}
+.spin-start:disabled{
+  opacity:1!important;
+  background:var(--control-red)!important;
+  color:#c7a46d!important;
+  filter:saturate(.62) brightness(.72);
+  cursor:not-allowed;
+}
+.spin-start:not(:disabled){
+  color:#ffe26f!important;
+  filter:none;
+}
+
+/* Wager summary is one large tappable button; only the word '変更' looks like a small sub-button. */
+.bet-summary{
+  cursor:pointer;
+  padding:0 4%;
+  gap:.38em;
+}
+.bet-summary small{
+  pointer-events:none;
+  padding:.34em .66em;
+  border:1px solid #d5a54e!important;
+  border-radius:4px;
+  box-shadow:inset 0 0 5px #a33c1e,0 1px 4px #000;
+}
+
+@media (max-height:430px) and (orientation:landscape){
+  .game-header{left:.7%;width:75.78%;grid-template-columns:14% 48% 38%}
+  .brand,.header-guide{font-size:clamp(13px,1.42vw,21px)}
+  .bet-sidebar{top:34%;height:66%}
+}
+
+
+/* v10.3: align header/actions with board, lower the control stack, emphasize spin */
+/* 14 + 47 + 37 + two 1% gaps = 100%, so the buttons no longer spill past the table edge. */
+.game-header{
+  grid-template-columns:14% 47% 37%;
+  gap:1%;
+}
+.header-actions .top-button{
+  width:47.5%;
+  flex:0 0 47.5%;
+}
+
+/* Keep the right control stack the same visual size, but anchor its bottom to the betting table bottom.
+   This exposes more of Nobunaga's torso/arm above the controls. */
+.bet-sidebar{
+  top:0!important;
+  height:100%!important;
+  display:flex;
+  justify-content:flex-end;
+  box-sizing:border-box;
+  padding:.25% .4% 0;
+  gap:.7%;
+}
+.bankroll-box{height:6.3%;flex:0 0 6.3%}
+.money-button{height:6.9%;flex:0 0 6.9%}
+.chip-picker{height:17.8%;flex:0 0 17.8%}
+.bet-summary{height:6.9%;flex:0 0 6.9%}
+.spin-start{height:10.5%;flex:0 0 10.5%}
+
+/* Main action: opaque gold button with large black type. */
+.spin-start,
+.spin-start:disabled,
+.spin-start:not(:disabled){
+  opacity:1!important;
+  background:linear-gradient(180deg,#ffe58d 0%,#d8a82e 48%,#b77b12 100%)!important;
+  color:#17100a!important;
+  border:2px solid #fff0a4!important;
+  box-shadow:inset 0 0 0 2px #8f5b10,inset 0 2px 7px #fff3b8,0 3px 10px #000a!important;
+  text-shadow:0 1px 0 #fff1a0!important;
+  filter:none!important;
+  font-weight:900!important;
+  font-size:clamp(20px,2vw,34px)!important;
+  letter-spacing:.03em;
+}
+.spin-start:not(:disabled):hover{
+  background:linear-gradient(180deg,#fff0a8 0%,#e6b83e 48%,#c58b18 100%)!important;
+  filter:brightness(1.04)!important;
+}
+.spin-start:disabled{cursor:not-allowed}
+
+@media (max-height:430px) and (orientation:landscape){
+  .game-header{grid-template-columns:14% 47% 37%;gap:1%}
+  .header-actions .top-button{width:47.5%;flex-basis:47.5%}
+  .bet-sidebar{top:0!important;height:100%!important;gap:.55%;padding-bottom:0}
+  .bankroll-box{height:6%;flex-basis:6%}
+  .money-button{height:6.6%;flex-basis:6.6%}
+  .chip-picker{height:17.4%;flex-basis:17.4%}
+  .bet-summary{height:6.6%;flex-basis:6.6%}
+  .spin-start{height:10%;flex-basis:10%;font-size:clamp(18px,1.8vw,29px)!important}
+}
+
+/* v11: final visual polish — equal coin frames and centered Nobunaga */
+.chip-picker{
+  display:flex;
+  align-items:stretch;
+}
+.chip-picker .chip,
+.chip-picker .chip.copper,
+.chip-picker .chip.silver,
+.chip-picker .chip.gold{
+  width:auto!important;
+  flex:1 1 0!important;
+  height:94%!important;
+  min-width:0!important;
+  border-radius:8px!important;
+  padding:1.5%!important;
+  margin:0!important;
+}
+.chip-picker .chip.selected{
+  outline:2px solid #fff3b8!important;
+  outline-offset:-2px!important;
+}
+
+/* Move Nobunaga slightly right within his visual area. */
+.bet-screen{
+  background-size:104% auto;
+  background-position:left center;
+}
+
+
+/* v13 step: wager markers must never move the number labels. */
+.number-grid button,
+.number-grid button.has-wager{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0!important;
+}
+
+/* Keep line/corner betting hit targets above the number cells while the
+   visible dot/diamond stays small. */
+.number-area{isolation:isolate}
+.edge-layer{
+  z-index:20!important;
+  pointer-events:none!important;
+}
+.edge-layer .edge-button{
+  z-index:21!important;
+  pointer-events:auto!important;
+}
+.edge-layer .edge-button.corner{z-index:22!important}
+.wager-layer{z-index:19!important;pointer-events:none!important}
+
+
+/* v14: keep number labels fixed, lower cell coins, and enlarge only the
+   invisible betting hit area for split/corner bets. */
+.number-grid button .cell-stack{
+  top:clamp(14px,2.2vh,24px)!important;
+}
+.edge-layer .edge-button{
+  width:clamp(34px,2.5vw,44px)!important;
+  height:clamp(34px,2.5vw,44px)!important;
+  min-width:34px!important;
+  min-height:34px!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.edge-layer .edge-button:after{
+  width:7px!important;height:7px!important;
+  border:2px solid #fff2be!important;
+  background:#68371b!important;
+  box-shadow:0 1px 2px #000!important;
+}
+.edge-layer .edge-button.corner:after{
+  width:8px!important;height:8px!important;border-radius:1px!important;
+}
+.edge-stack{z-index:30!important}
+
+
+/* v13.24: stop wager movement animation and keep placed coins visibly glowing */
+.just-placed .wager-stack{
+  animation:none!important;
+  transform:none!important;
+}
+
+/* Keep the normal fixed positioning transforms for the actual wager stacks. */
+.cell-stack{
+  transform:translateX(-50%)!important;
+}
+.edge-stack{
+  transform:translate(-50%,-50%)!important;
+}
+
+/* Permanent highlight for placed coins so wagers are easy to find at a glance. */
+.wager-stack .coin-piece{
+  filter:
+    drop-shadow(0 0 2px #fff6c8)
+    drop-shadow(0 0 5px #ffd45f)
+    drop-shadow(0 0 9px #f2a51f)
+    drop-shadow(0 2px 3px #000c)!important;
+}
+
+/* Keep wagered cells subtly illuminated without any motion. */
+.number-grid button.has-wager,
+.zero-zone button.has-wager,
+.columns button.has-wager,
+.range-row button.has-wager,
+.dozen-row button.has-wager,
+.outside-row button.has-wager{
+  outline:3px solid #ffe991!important;
+  outline-offset:-4px!important;
+  box-shadow:
+    inset 0 0 15px rgba(255,220,105,.58),
+    0 0 10px rgba(255,211,83,.55)!important;
+}
+
+/* Line/corner wager markers remain small but glow once wagered. */
+.edge-button.has-wager{
+  box-shadow:
+    0 0 0 2px #fff0a0,
+    0 0 8px #ffd257,
+    0 0 13px rgba(246,168,25,.8)!important;
+}
+
+
+/* v13.25: fine positioning and remove ring around line/corner wagers */
+
+/* Number-cell coins: nudge slightly left while keeping number labels fixed. */
+.number-grid button .cell-stack{
+  left:47.5%!important;
+}
+
+/* Bottom/side outside bets: lift the coin slightly upward. */
+.range-row .cell-stack,
+.dozen-row .cell-stack,
+.outside-row .cell-stack,
+.columns .cell-stack,
+.zero-zone button:not(.zero-split) .cell-stack{
+  top:44%!important;
+}
+
+/* Remove the circular "target" glow around split/corner markers.
+   The coin itself remains softly illuminated. */
+.edge-button.has-wager{
+  box-shadow:none!important;
+}
+
+/* Keep edge/corner wager coins glowing without creating a ring. */
+.edge-stack .coin-piece{
+  filter:
+    drop-shadow(0 0 2px #fff1bd)
+    drop-shadow(0 0 5px #e8b63e)
+    drop-shadow(0 2px 3px #000c)!important;
+}
+
+
+/* v14.2 rules: visual coin guide */
+.rule-coins{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.7em;
+  margin:.55em 0 .7em;
+}
+.rule-coin{
+  min-height:clamp(88px,13vh,135px);
+  display:grid;
+  grid-template-rows:1fr auto auto;
+  place-items:center;
+  gap:.12em;
+  padding:.45em .3em;
+  border:1px solid #b28b54;
+  border-radius:6px;
+  background:#f7ebcfb8;
+  box-shadow:inset 0 0 12px #9b6f2820;
+  text-align:center;
+}
+.rule-coin img{
+  display:block;
+  width:auto;
+  height:clamp(42px,6.8vh,72px);
+  max-width:88%;
+  object-fit:contain;
+  filter:drop-shadow(0 2px 3px #3b271f66);
+}
+.rule-coin strong{
+  font-size:1.05em;
+  line-height:1.1;
+}
+.rule-coin span{
+  font-size:.82em;
+  color:#64462d;
+  line-height:1.1;
+}
+.coin-rule{
+  padding:.48em .65em;
+  border-left:4px solid #9b702f;
+  background:#f5e5c5a8;
+}
+@media (max-width:760px){
+  .rule-coins{gap:.35em}
+  .rule-coin{padding:.35em .18em}
+  .rule-coin img{height:clamp(36px,6vh,56px)}
+}
+
+
+/* v14.3 modal footer alignment + ledger legend colors */
+.modal-footer > .paper-button:only-child{
+  margin-left:auto;
+}
+.ledger-key .stat-symbol.red{color:#aa151e}
+.ledger-key .stat-symbol.black{color:#171514}
+.ledger-key .stat-symbol.green{color:#006c4b}
+
+
+/* v14.6 dramatic dynamic result screen */
+.result-panel{
+  right:1.4%!important;
+  bottom:2.2%!important;
+  width:41%!important;
+  height:61%!important;
+  padding:1.1% 1.6%!important;
+  justify-content:center!important;
+  gap:2.5%!important;
+  overflow:visible!important;
+  background:
+    linear-gradient(180deg,rgba(8,8,12,.96),rgba(31,7,9,.96))!important;
+  border:3px solid #f6cf69!important;
+  border-radius:12px!important;
+  box-shadow:
+    0 0 0 4px #3b1a09,
+    inset 0 0 0 2px #7f4c17,
+    inset 0 0 32px rgba(229,164,60,.16),
+    0 0 30px rgba(0,0,0,.75)!important;
+}
+.result-panel::before,
+.result-panel::after{
+  content:"✿";
+  position:absolute;
+  top:-.45em;
+  color:#f1bf4f;
+  font-size:clamp(24px,2.7vw,50px);
+  text-shadow:0 2px 3px #401705,0 0 8px #d28d25;
+}
+.result-panel::before{left:.4em}
+.result-panel::after{right:.4em}
+
+.result-number{
+  width:92%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.45em;
+  padding:.4em .7em;
+  color:#fff1c7!important;
+  border-top:2px solid #b48231;
+  border-bottom:2px solid #b48231;
+  background:linear-gradient(90deg,transparent,#120f12cc,transparent);
+}
+.result-number .result-ball{
+  min-width:1.55em;
+  padding:.06em .22em!important;
+  border:3px solid #f8df88!important;
+  border-radius:7px!important;
+  font-size:clamp(42px,5.2vw,92px)!important;
+  line-height:1!important;
+  color:#fff!important;
+  box-shadow:0 0 15px rgba(255,214,103,.45);
+}
+.result-number .result-ball.black{background:#171719!important}
+.result-number .result-ball.red{background:#b91d28!important}
+.result-number .result-ball.green{background:#087451!important}
+
+.result-color{
+  font-size:clamp(22px,2.3vw,42px);
+  font-weight:900;
+  white-space:nowrap;
+  text-shadow:0 2px 3px #000;
+}
+.result-color b{font-size:1.15em}
+.result-color.red{color:#ff4653}
+.result-color.black{color:#fff}
+.result-color.green{color:#43d49d}
+
+.result-title{
+  width:92%;
+  padding:.08em 0 .12em;
+  font-size:clamp(56px,7vw,126px)!important;
+  letter-spacing:.08em;
+  font-weight:900!important;
+  text-shadow:
+    0 4px 0 #7a3e0a,
+    0 0 10px #ffd86b,
+    0 0 25px #b86c16!important;
+}
+.wheel-screen.lose .result-title{
+  color:#e5edff!important;
+  text-shadow:
+    0 4px 0 #344d7e,
+    0 0 12px #b8d0ff,
+    0 0 28px #31518e!important;
+}
+
+.result-net{
+  width:92%;
+  padding:.12em .35em;
+  font-size:clamp(46px,5.3vw,96px)!important;
+  line-height:1.05;
+  border-top:2px solid #8b4d25;
+  border-bottom:2px solid #8b4d25;
+  background:linear-gradient(90deg,transparent,#5b0d10aa,transparent);
+  text-shadow:0 3px 3px #000,0 0 12px #b46820;
+}
+.wheel-screen.lose .result-net{
+  color:#f6f2ed!important;
+  text-shadow:0 3px 3px #000,0 0 9px #7582a1;
+}
+
+.result-balance{
+  font-size:clamp(16px,1.7vw,30px)!important;
+  color:#f3dfaa!important;
+}
+.result-balance strong{
+  font-size:1.35em;
+  color:#fff5d8;
+}
+
+.next-round{
+  width:76%!important;
+  height:auto!important;
+  min-height:18%!important;
+  padding:.42em 1em!important;
+  font-family:"Yu Mincho",serif;
+  font-size:clamp(24px,2.8vw,50px)!important;
+  font-weight:900!important;
+  border:3px solid #ffd777!important;
+  box-shadow:
+    inset 0 0 0 2px #8d2b19,
+    0 0 0 3px #6b2b0d,
+    0 0 15px rgba(255,184,46,.5)!important;
+}
+.next-round:active{
+  transform:translateY(2px);
+}
+
+/* v14.8: make result decorations completely transparent to pointer input */
+.result-panel::before,
+.result-panel::after,
+.result-coin-rain,
+.result-coin-rain *,
+.result-number,
+.result-number *,
+.result-title,
+.result-net,
+.result-balance{
+  pointer-events:none!important;
+}
+#next-round{
+  pointer-events:auto!important;
+  position:relative!important;
+  z-index:999!important;
+}
+
+
+/* v14.9: force next-round button to the topmost interactive layer */
+#next-round{
+  position:relative!important;
+  z-index:2147483647!important;
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+}
+.result-panel{
+  pointer-events:auto!important;
+}
+
+
+/* v14.11: start button state + result polish + file SFX companion */
+.spin-stake{
+  display:none!important;
+}
+
+/* Keep the label simple: same wording, clearly inactive when no wager exists. */
+#start-spin:disabled,
+#start-spin.is-disabled{
+  color:#8c8c86!important;
+  text-shadow:none!important;
+  cursor:default!important;
+  filter:saturate(.48) brightness(.88)!important;
+  box-shadow:
+    inset 0 0 0 1px rgba(80,70,45,.42),
+    0 2px 4px rgba(0,0,0,.25)!important;
+}
+#start-spin:not(:disabled){
+  color:#151007!important;
+}
+
+/* Give the retainer and coin bag more breathing room. */
+.result-panel{
+  left:auto!important;
+  right:18.5%!important;
+  width:34%!important;
+  max-width:none!important;
+  height:58%!important;
+  bottom:3.5%!important;
+}
+
+/* Stronger hierarchy without covering more of the illustration. */
+.result-number{
+  width:94%!important;
+  padding:.32em .45em!important;
+}
+.result-number .result-ball{
+  font-size:clamp(46px,5.6vw,100px)!important;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.18),
+    0 0 18px rgba(255,218,105,.52),
+    0 5px 12px rgba(0,0,0,.65)!important;
+}
+.result-title{
+  font-size:clamp(58px,7.4vw,132px)!important;
+  line-height:.95!important;
+  transform:scaleX(1.04);
+}
+.result-net{
+  font-size:clamp(48px,5.6vw,102px)!important;
+  font-weight:900!important;
+}
+.wheel-screen.win .result-panel{
+  box-shadow:
+    0 0 0 4px #3b1a09,
+    inset 0 0 0 2px #9c6c20,
+    inset 0 0 42px rgba(244,188,62,.24),
+    0 0 36px rgba(235,170,50,.28),
+    0 0 34px rgba(0,0,0,.72)!important;
+}
+.wheel-screen.lose .result-panel{
+  box-shadow:
+    0 0 0 4px #271b18,
+    inset 0 0 0 2px #665b69,
+    inset 0 0 38px rgba(74,86,125,.22),
+    0 0 30px rgba(0,0,0,.75)!important;
+}
+
+
+/* v14.12: establish stable wheel / center result space / character zone */
+
+/* LEFT: keep roulette clearly separated from the future result panel. */
+
+/* If the actual wheel element is positioned independently, keep it inside the left zone. */
+#wheel,
+.roulette{
+  transform-origin:center center!important;
+}
+
+/* RIGHT: reserve a dedicated illustration zone for Nobunaga + retainer + coin bag. */
+
+/* Let the illustration breathe vertically and avoid clipping the coin bag. */
+
+/* CENTER: keep the result panel out of both hero zones.
+   Its final styling will be tuned after this layout is visually approved. */
+.result-panel{
+  left:45.5%!important;
+  right:auto!important;
+  width:24%!important;
+  max-width:24%!important;
+  height:56%!important;
+  bottom:4%!important;
+}
+
+/* Prevent result decorations from visually spilling into wheel/characters while testing layout. */
+.result-panel{
+  overflow:visible!important;
+}
+
+/* Keep the coin rain layer from clipping behind the character zone. */
+.result-coin-rain{
+  overflow:visible!important;
+}
+
+
+/* v14.13: horizontal result panel in the lower-right 3/5 area */
+
+/* Result panel occupies the lower half of the right-side stage. */
+.result-panel{
+  left:41.5%!important;
+  right:1.8%!important;
+  width:auto!important;
+  max-width:none!important;
+  height:38%!important;
+  bottom:3.5%!important;
+
+  display:grid!important;
+  grid-template-columns:2fr 1fr!important;
+  grid-template-rows:1fr 1fr!important;
+  column-gap:2.2%!important;
+  row-gap:2%!important;
+
+  padding:1.2% 1.5%!important;
+  overflow:visible!important;
+  border-radius:12px!important;
+}
+
+/* Left 2/3 — upper: result number and color. */
+.result-number{
+  grid-column:1!important;
+  grid-row:1!important;
+  align-self:center!important;
+  justify-self:stretch!important;
+  width:auto!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:.34em .55em!important;
+  justify-content:flex-start!important;
+  gap:.42em!important;
+  overflow:visible!important;
+}
+.result-number .result-ball{
+  flex:0 0 auto;
+  font-size:clamp(38px,4.4vw,78px)!important;
+}
+.result-color{
+  flex:0 0 auto;
+  font-size:clamp(18px,2vw,34px)!important;
+}
+
+/* Outcome word floats above the upper-left area for impact. */
+.result-title{
+  position:absolute!important;
+  left:35%!important;
+  top:-10%!important;
+  width:auto!important;
+  max-width:45%!important;
+  margin:0!important;
+  padding:0 .08em!important;
+  z-index:6!important;
+
+  font-size:clamp(48px,6vw,108px)!important;
+  line-height:.9!important;
+  white-space:nowrap!important;
+  transform:rotate(-3deg)!important;
+  transform-origin:center!important;
+  pointer-events:none!important;
+}
+
+/* Left 2/3 — lower: the net result is the main numeric readout. */
+.result-net{
+  grid-column:1!important;
+  grid-row:2!important;
+  align-self:center!important;
+  justify-self:stretch!important;
+  width:auto!important;
+  margin:0!important;
+  padding:.08em .35em!important;
+
+  font-size:clamp(44px,5.4vw,96px)!important;
+  line-height:1!important;
+  text-align:center!important;
+}
+
+/* Keep the panel uncluttered; balance remains available back on the betting table. */
+.result-balance{
+  display:none!important;
+}
+
+/* Right 1/3 — large two-line next-round button spanning both rows. */
+#next-round{
+  grid-column:2!important;
+  grid-row:1 / 3!important;
+  align-self:stretch!important;
+  justify-self:stretch!important;
+
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:.25em .35em!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+
+  font-size:0!important;
+  line-height:1.05!important;
+  white-space:normal!important;
+  overflow:visible!important;
+}
+
+#next-round::before{
+  content:"次の\A勝負へ";
+  white-space:pre;
+  font-size:clamp(28px,3.4vw,62px);
+  line-height:1.15;
+  font-weight:900;
+  text-align:center;
+}
+
+/* Three outcomes share the same geometry; only their dramatic treatment differs. */
+.wheel-screen.win .result-title{
+  color:#ffe174!important;
+}
+.wheel-screen.lose .result-title{
+  color:#e9efff!important;
+}
+
+/* Draw should read calmer than a loss while still fitting the same frame. */
+.wheel-screen.result:not(.win) .result-title{
+  letter-spacing:.02em!important;
+}
+
+/* Small landscape screens: preserve button and prevent clipping. */
+@media (max-height:500px){
+  .result-panel{
+    height:40%!important;
+    bottom:2%!important;
+    padding:.8% 1.1%!important;
+  }
+  .result-title{
+    top:-8%!important;
+    font-size:clamp(38px,5.5vw,76px)!important;
+  }
+  .result-number .result-ball{
+    font-size:clamp(32px,4vw,58px)!important;
+  }
+  .result-net{
+    font-size:clamp(36px,4.8vw,70px)!important;
+  }
+  #next-round::before{
+    font-size:clamp(24px,3vw,44px)!important;
+  }
+}
+
+
+/* v14.14: error-only toast + clean spin state + roomier horizontal result */
+
+/* `hidden` must beat the result panel's display:grid!important while spinning. */
+.result-panel[hidden]{
+  display:none!important;
+}
+
+/* "出目" is redundant; the number and color now own the upper-left space. */
+.result-number{
+  padding-left:.9em!important;
+  gap:.6em!important;
+}
+.result-number .result-ball{
+  font-size:clamp(42px,4.9vw,86px)!important;
+}
+.result-color{
+  font-size:clamp(20px,2.2vw,38px)!important;
+}
+
+/* Outcome text gets more horizontal room and stays clear of the right button. */
+.result-title{
+  left:28%!important;
+  top:-11%!important;
+  max-width:38%!important;
+  font-size:clamp(44px,5.4vw,96px)!important;
+}
+
+/* Draw is longer than 勝利！/惜敗…, so keep its impact but avoid button overlap. */
+.wheel-screen.draw .result-title{
+  left:22%!important;
+  max-width:43%!important;
+  font-size:clamp(36px,4.5vw,80px)!important;
+  transform:rotate(-2deg)!important;
+  color:#f6e3a3!important;
+  text-shadow:
+    0 3px 0 #67501d,
+    0 0 10px #f1d47b,
+    0 0 22px rgba(185,145,57,.55)!important;
+}
+
+/* Draw uses the same subdued frame family as a loss, but remains distinct. */
+.wheel-screen.draw .result-panel{
+  box-shadow:
+    0 0 0 4px #2b2218,
+    inset 0 0 0 2px #8c7548,
+    inset 0 0 38px rgba(139,111,58,.2),
+    0 0 30px rgba(0,0,0,.72)!important;
+}
+
+
+/* v14.15: separate dramatic outcome lettering from the compact result box */
+
+/* Compact lower result box: number / delta / next only. */
+.result-panel{
+  left:41.5%!important;
+  right:1.8%!important;
+  width:auto!important;
+  height:27%!important;
+  bottom:3.2%!important;
+  padding:.8% 1.1%!important;
+
+  grid-template-columns:2fr 1fr!important;
+  grid-template-rows:1fr 1fr!important;
+  column-gap:1.8%!important;
+  row-gap:0!important;
+}
+
+/* Result number/color: smaller and calmer. */
+.result-number{
+  grid-column:1!important;
+  grid-row:1!important;
+  align-self:center!important;
+  padding:.12em .55em!important;
+  gap:.42em!important;
+  border-top:0!important;
+}
+.result-number .result-ball{
+  font-size:clamp(30px,3.5vw,62px)!important;
+  min-width:1.4em!important;
+}
+.result-color{
+  font-size:clamp(17px,1.8vw,31px)!important;
+}
+
+/* Delta: still prominent, but no longer competes with the outcome lettering. */
+.result-net{
+  grid-column:1!important;
+  grid-row:2!important;
+  align-self:center!important;
+  padding:.02em .25em!important;
+  font-size:clamp(32px,3.9vw,70px)!important;
+  line-height:1!important;
+}
+
+/* Outcome text is now an independent brush-like stage element above the box. */
+.result-title{
+  position:absolute!important;
+  left:36%!important;
+  top:-108%!important;
+  width:auto!important;
+  max-width:50%!important;
+  margin:0!important;
+  padding:0!important;
+
+  font-family:"Yu Mincho","Hiragino Mincho ProN","MS PMincho",serif!important;
+  font-size:clamp(54px,6.6vw,118px)!important;
+  font-weight:900!important;
+  line-height:.92!important;
+  letter-spacing:.03em!important;
+  white-space:nowrap!important;
+
+  transform:rotate(-4deg)!important;
+  transform-origin:center!important;
+  z-index:8!important;
+  pointer-events:none!important;
+
+  -webkit-text-stroke:.4px rgba(63,29,5,.25);
+}
+
+/* Win: warm gold brush lettering. */
+.wheel-screen.win .result-title{
+  color:#f7d86a!important;
+  text-shadow:
+    0 3px 0 #7a3d09,
+    2px 5px 2px rgba(50,20,0,.65),
+    0 0 8px rgba(255,221,102,.72),
+    0 0 20px rgba(191,112,18,.45)!important;
+}
+
+/* Loss: pale ink/steel tone. */
+.wheel-screen.lose .result-title{
+  color:#edf1ff!important;
+  text-shadow:
+    0 3px 0 #39486b,
+    2px 5px 2px rgba(10,14,28,.68),
+    0 0 8px rgba(190,207,255,.55),
+    0 0 18px rgba(71,91,146,.38)!important;
+}
+
+/* Draw: softer antique gold and slightly smaller because the word is longer. */
+.wheel-screen.draw .result-title{
+  left:31%!important;
+  top:-103%!important;
+  max-width:55%!important;
+  font-size:clamp(46px,5.6vw,98px)!important;
+  color:#ead79e!important;
+  text-shadow:
+    0 3px 0 #69562c,
+    2px 5px 2px rgba(39,30,12,.62),
+    0 0 8px rgba(239,215,150,.55),
+    0 0 18px rgba(139,109,53,.35)!important;
+}
+
+/* The next button fills the compact panel's right third. */
+#next-round::before{
+  font-size:clamp(24px,2.8vw,50px)!important;
+}
+
+@media (max-height:500px){
+  .result-panel{
+    height:29%!important;
+    bottom:2.4%!important;
+  }
+  .result-title{
+    top:-98%!important;
+    font-size:clamp(40px,5.7vw,78px)!important;
+  }
+  .wheel-screen.draw .result-title{
+    top:-94%!important;
+    font-size:clamp(36px,5vw,68px)!important;
+  }
+  .result-number .result-ball{
+    font-size:clamp(27px,3.3vw,48px)!important;
+  }
+  .result-net{
+    font-size:clamp(29px,3.7vw,55px)!important;
+  }
+}
+
+
+/* v14.16: centered result data + brush outcome wording */
+
+/* Center the number/color and delta inside the compact left result area. */
+.result-number{
+  justify-content:center!important;
+  text-align:center!important;
+  padding-left:.35em!important;
+  padding-right:.35em!important;
+}
+.result-net{
+  text-align:center!important;
+}
+
+/* Final outcome lettering position/scale based on approved mockup. */
+.result-title{
+  left:43%!important;
+  top:-112%!important;
+  max-width:42%!important;
+
+  font-family:"Yu Mincho","Hiragino Mincho ProN","MS PMincho",serif!important;
+  font-size:clamp(42px,5.2vw,92px)!important;
+  font-weight:900!important;
+  line-height:.9!important;
+  letter-spacing:.02em!important;
+  transform:rotate(-4deg)!important;
+
+  /* Slightly rougher brush impression using layered shadows. */
+  text-shadow:
+    1px 1px 0 rgba(50,25,5,.28),
+    -1px 0 0 rgba(255,255,255,.08),
+    0 3px 0 rgba(60,25,5,.24),
+    0 0 8px currentColor!important;
+}
+
+.wheel-screen.win .result-title{
+  color:#f5d45f!important;
+}
+.wheel-screen.lose .result-title{
+  color:#edf1ff!important;
+}
+.wheel-screen.draw .result-title{
+  left:36%!important;
+  top:-108%!important;
+  max-width:48%!important;
+  font-size:clamp(34px,4.4vw,76px)!important;
+  color:#ead79e!important;
+}
+
+/* Result data is intentionally a bit smaller than the dramatic outcome text. */
+.result-number .result-ball{
+  font-size:clamp(28px,3.2vw,56px)!important;
+}
+.result-color{
+  font-size:clamp(16px,1.7vw,29px)!important;
+}
+.result-net{
+  font-size:clamp(29px,3.5vw,62px)!important;
+}
+
+/* Make win coins feel more celebratory without blocking interaction. */
+.result-coin-rain,
+.result-coin-rain *{
+  pointer-events:none!important;
+}
+
+
+/* v14.17: lower outcome lettering + more cursive Japanese feel */
+
+/* Move outcome lettering down toward Nobunaga's chest / just above the result box. */
+.result-title{
+  top:-76%!important;
+  left:43%!important;
+
+  /* Prefer cursive/brush-like Japanese fonts when available on the device. */
+  font-family:
+    "Yu Kyokasho",
+    "YuKyokasho",
+    "Hiragino Mincho ProN",
+    "Hiragino Mincho Pro",
+    "Yu Mincho",
+    "MS PMincho",
+    serif!important;
+
+  font-style:italic!important;
+  font-weight:700!important;
+  letter-spacing:.01em!important;
+  transform:rotate(-5deg) skewX(-4deg)!important;
+
+  /* Irregular ink-like edges without making the text too blurry. */
+  text-shadow:
+    1px 1px 0 rgba(50,25,5,.35),
+    -1px 0 0 rgba(255,255,255,.05),
+    0 2px 1px rgba(30,15,5,.25),
+    0 0 5px currentColor!important;
+}
+
+.wheel-screen.draw .result-title{
+  top:-72%!important;
+  left:36%!important;
+}
+
+/* Keep win coin layer above the background and below interactive result UI. */
+.result-coin-rain{
+  position:absolute!important;
+  inset:0!important;
+  z-index:4!important;
+  overflow:visible!important;
+  pointer-events:none!important;
+}
+.result-panel{
+  z-index:10!important;
+}
+.result-title{
+  z-index:12!important;
+}
+
+@media (max-height:500px){
+  .result-title{
+    top:-68%!important;
+  }
+  .wheel-screen.draw .result-title{
+    top:-64%!important;
+  }
+}
+
+/* Keep the 0/00 split coin centered even while its button is just placed.
+   This small marker is not a full number cell, so it needs no cell outline. */
+.zero-zone .zero-split .cell-stack{
+  left:50%!important;
+  top:50%!important;
+  transform:translate(-50%,-50%)!important;
+}
+.zero-zone .zero-split.has-wager{
+  outline:none!important;
+  box-shadow:none!important;
+  background:transparent!important;
+}
+.zero-zone .zero-split,
+.zero-zone .zero-split:hover,
+.zero-zone .zero-split:focus-visible{
+  outline:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+}
+.zero-zone .zero-split:focus-visible{ text-shadow:0 0 7px #fff8cf,0 0 3px #000 }
+
+
+/* v14.18: visible win-coin rain, lower/larger gyosho result text, colored ledger recent marks */
+.result-title{
+  top:-48% !important;
+  left:46% !important;
+  max-width:36% !important;
+  font-family:
+    "Yu Kyokasho Yoko",
+    "Yu Kyokasho",
+    "YuKyokasho",
+    "Hiragino Mincho ProN",
+    "Yu Mincho",
+    "MS PMincho",
+    serif !important;
+  font-size:clamp(58px,6.7vw,122px) !important;
+  font-style:italic !important;
+  font-weight:700 !important;
+  line-height:.92 !important;
+  letter-spacing:.02em !important;
+  white-space:nowrap !important;
+  transform:rotate(-7deg) skewX(-5deg) !important;
+  z-index:18 !important;
+  pointer-events:none !important;
+}
+.wheel-screen.win .result-title{
+  color:#f4d25b !important;
+  text-shadow:
+    1px 1px 0 rgba(68,34,7,.35),
+    0 3px 0 rgba(103,57,14,.35),
+    0 0 8px rgba(255,230,138,.8),
+    0 0 18px rgba(241,191,57,.55) !important;
+}
+.wheel-screen.lose .result-title{
+  color:#edf1ff !important;
+  text-shadow:
+    1px 1px 0 rgba(40,55,90,.4),
+    0 2px 0 rgba(54,77,126,.35),
+    0 0 8px rgba(210,225,255,.75) !important;
+}
+.wheel-screen.draw .result-title{
+  top:-50% !important;
+  left:41% !important;
+  max-width:42% !important;
+  font-size:clamp(52px,5.8vw,108px) !important;
+  color:#ead79e !important;
+}
+.result-coin-rain{
+  position:absolute !important;
+  inset:0 !important;
+  z-index:16 !important;
+  overflow:hidden !important;
+  pointer-events:none !important;
+}
+.result-coin-rain .fall-coin{
+  --coin-scale:1;
+  --coin-duration:1.85s;
+  --coin-mid-drift:0px;
+  --coin-end-drift:0px;
+  --coin-mid-rotate:360deg;
+  --coin-end-rotate:720deg;
+  --coin-bright:1.08;
+  --coin-start-top:-18%;
+  width:clamp(42px,4.4vw,76px) !important;
+  height:clamp(22px,2.2vw,38px) !important;
+  top:var(--coin-start-top) !important;
+  opacity:1 !important;
+  box-shadow:
+    0 0 7px rgba(255,248,198,.65),
+    0 0 16px rgba(255,205,82,.38),
+    0 3px 10px rgba(21,6,1,.45) !important;
+  filter:
+    brightness(var(--coin-bright))
+    saturate(1.08)
+    drop-shadow(0 0 10px rgba(255,227,128,.68))
+    drop-shadow(0 0 18px rgba(255,173,48,.26));
+  will-change:transform,top,opacity;
+  animation:coinfall-result var(--coin-duration) cubic-bezier(.18,.74,.33,1) forwards !important;
+}
+.result-coin-rain .fall-coin:after{
+  content:"壱";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:rgba(116,62,8,.82);
+  text-shadow:0 0 8px rgba(255,244,201,.28);
+  font:700 clamp(10px,1vw,16px) serif;
+}
+@keyframes coinfall-result{
+  0%{
+    top:var(--coin-start-top);
+    transform:translate3d(0,0,0) rotate(0deg) scale(calc(var(--coin-scale) * .88));
+    opacity:0;
+  }
+  10%{opacity:1}
+  48%{
+    transform:translate3d(var(--coin-mid-drift),0,0) rotate(var(--coin-mid-rotate)) scale(var(--coin-scale));
+  }
+  100%{
+    top:104%;
+    transform:translate3d(var(--coin-end-drift),0,0) rotate(var(--coin-end-rotate)) scale(calc(var(--coin-scale) * 1.02));
+    opacity:.03;
+  }
+}
+.recent-draws .stat-symbol.red{color:#c51b29 !important;}
+.recent-draws .stat-symbol.green{color:#138a65 !important;}
+.recent-draws .stat-symbol.black{color:#2a211b !important;}
+
+/* Rules and ledger use the limited landscape height for their content. */
+.paper-modal.modal-no-heading .modal-header{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;padding:0}
+.paper-modal.modal-no-heading .modal-body{padding-top:.3%}
+.paper-modal:is(.modal-no-heading,.modal-bets) .modal-body{padding-right:clamp(10px,1vw,16px)}
+.paper-modal.modal-bets .modal-header{height:11%;min-height:36px}
+.paper-modal.modal-bets .modal-header > div{display:flex;align-items:baseline;gap:clamp(14px,2vw,30px);min-width:0;width:100%}
+.paper-modal.modal-bets .modal-eyebrow{display:none}
+.paper-modal.modal-bets .modal-header h2{flex:none;font-size:clamp(21px,2.35vw,38px)}
+.paper-modal.modal-bets .modal-instruction{margin:0;font-size:clamp(11px,1.05vw,18px);color:#6d4526;white-space:nowrap}
+.ledger-layout{display:grid;grid-template-columns:minmax(0,30%) minmax(0,1fr);gap:2%;align-items:start}
+.ledger-recent,.ledger-stats{min-width:0}
+.ledger-recent h3,.ledger-toolbar h3{margin:0;font-size:clamp(18px,1.7vw,30px);line-height:1.4}
+.ledger-recent h3{padding:.15em 0 .45em;border-bottom:2px solid #a47a43}
+.ledger-toolbar{min-height:2.3em;display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:.4em .9em;padding:0 0 .4em;border-bottom:2px solid #a47a43}
+.ledger-sample{font-size:.78em;color:#654d35;white-space:nowrap}
+.ledger-tabs{margin-left:auto}
+.ledger-tabs button{font-size:.83em;white-space:nowrap}
+.ledger-layout .recent-draws{display:block;margin:0}
+.ledger-layout .recent-draws span{background:none;border:0;padding:0;border-radius:0}
+.recent-draw{display:grid;grid-template-columns:5em 3em 1fr;align-items:center;gap:.3em;min-height:clamp(36px,5.5vh,60px);padding:0 .25em;border-bottom:1px solid #bba278}
+.recent-rank{font-size:.84em;white-space:nowrap}
+.recent-number{font-size:1.55em;line-height:1}
+.recent-color{font-size:1.05em;font-weight:700;white-space:nowrap}
+.ledger-layout .ledger-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.ledger-layout .ledger-item{grid-template-columns:clamp(62px,7vw,120px) minmax(0,1fr) clamp(38px,4.5vw,70px);min-height:clamp(36px,5.5vh,60px);font-size:clamp(14px,1.25vw,22px)}
+.ledger-layout .ledger-item .bar-track{height:46%}
+@media (max-width:700px){
+  .paper-modal.modal-bets .modal-header{min-height:50px}
+  .paper-modal.modal-bets .modal-instruction{white-space:normal}
+  .ledger-layout{grid-template-columns:minmax(0,35%) minmax(0,1fr);gap:2%}
+  .ledger-toolbar{gap:.3em .5em}
+  .ledger-sample{order:3;width:100%}
+  .recent-draw{grid-template-columns:3.4em 2em 1fr;gap:.1em;font-size:clamp(12px,1.5vw,17px)}
+  .ledger-layout .ledger-item{grid-template-columns:clamp(52px,8vw,76px) minmax(0,1fr) 38px}
+}
+
+/* v19.0 canonical spin scene.
+   The painted stand is retired; the live wheel provides all wheel geometry. */
+.wheel-screen:not(.result){
+  background-image:url("./assets/spin.png");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.wheel-screen:not(.result) .wheel-disk{
+  left:4%!important;
+  top:2%!important;
+  width:min(96dvh,58vw)!important;
+  height:min(96dvh,58vw)!important;
+  transform:none!important;
+  transform-origin:50% 50%!important;
+  filter:drop-shadow(0 16px 16px rgba(16,6,3,.72)) drop-shadow(0 0 5px rgba(209,145,57,.16))!important;
+}
+.wheel-screen:not(.result) .wheel-disk::before{content:none!important}
+.wheel-screen:not(.result) .wheel-disk svg{position:relative;z-index:1}
+
+
+/* v14.19: verdict slot + no corner flowers + triple win coin rain */
+
+/* Remove the decorative corner flower marks from the result frame. */
+.result-panel::before,
+.result-panel::after{
+  content:none!important;
+  display:none!important;
+}
+
+/* Use a predictable transparent verdict area above the lower result panel.
+   The text itself is centered inside this invisible slot. */
+.result-title{
+  position:absolute!important;
+  left:0!important;
+  top:-92%!important;
+  width:66.666%!important;
+  max-width:none!important;
+  height:78%!important;
+  margin:0!important;
+  padding:0!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+
+  font-family:
+    "Yu Kyokasho Yoko",
+    "Yu Kyokasho",
+    "YuKyokasho",
+    "Hiragino Mincho ProN",
+    "Yu Mincho",
+    "MS PMincho",
+    serif!important;
+
+  font-style:italic!important;
+  font-weight:700!important;
+  font-size:clamp(50px,5.8vw,104px)!important;
+  line-height:1!important;
+  letter-spacing:0!important;
+  white-space:nowrap!important;
+
+  transform:rotate(-3deg) skewX(-3deg)!important;
+  transform-origin:center!important;
+  z-index:18!important;
+  pointer-events:none!important;
+}
+
+/* Win: red brush lettering with a clean white outline. */
+.wheel-screen.win .result-title{
+  color:#b51f2e!important;
+  -webkit-text-stroke:2px rgba(255,255,255,.92)!important;
+  paint-order:stroke fill!important;
+  text-shadow:
+    0 2px 0 rgba(88,10,18,.48),
+    0 4px 4px rgba(0,0,0,.45),
+    0 0 8px rgba(255,255,255,.2)!important;
+}
+
+/* Loss: cool pale brush lettering. */
+.wheel-screen.lose .result-title{
+  color:#edf1ff!important;
+  -webkit-text-stroke:1px rgba(57,73,117,.9)!important;
+  paint-order:stroke fill!important;
+  text-shadow:
+    0 3px 3px rgba(0,0,0,.55),
+    0 0 8px rgba(198,216,255,.4)!important;
+}
+
+/* Draw: antique ivory/gold, slightly smaller because the phrase is longer. */
+.wheel-screen.draw .result-title{
+  color:#ead79e!important;
+  -webkit-text-stroke:1px rgba(96,76,34,.9)!important;
+  paint-order:stroke fill!important;
+  font-size:clamp(38px,4.6vw,82px)!important;
+  text-shadow:
+    0 3px 3px rgba(0,0,0,.5),
+    0 0 7px rgba(239,218,154,.35)!important;
+}
+
+/* Keep result data calmly centered below the verdict. */
+.result-number,
+.result-net{
+  text-align:center!important;
+  justify-content:center!important;
+}
+
+/* Small landscape screens: keep the verdict slot close to the result box. */
+@media (max-height:500px){
+  .result-title{
+    top:-84%!important;
+    height:72%!important;
+    font-size:clamp(42px,5.2vw,78px)!important;
+  }
+  .wheel-screen.draw .result-title{
+    font-size:clamp(34px,4.3vw,64px)!important;
+  }
+}
+
+@media (orientation:landscape) and (min-aspect-ratio:2/1){
+  .wheel-screen:not(.result) .wheel-disk{
+    width:90dvh!important;
+    height:90dvh!important;
+    left:2.5%!important;
+    top:5dvh!important;
+  }
+}
+
+/* Restore visible coin layers while retaining the light around placed wagers. */
+.wager-stack .coin-piece.stacked{
+  filter:drop-shadow(0 2px 0 #4b2b1b) drop-shadow(0 4px 0 #d5b079)
+    drop-shadow(0 5px 3px #100705) drop-shadow(0 0 5px #ffd45f)!important;
+}
+.wager-stack .coin-piece.deep{
+  filter:drop-shadow(0 2px 0 #4b2b1b) drop-shadow(0 4px 0 #d5b079)
+    drop-shadow(0 6px 0 #745127) drop-shadow(0 8px 3px #100705)
+    drop-shadow(0 0 5px #ffd45f)!important;
+}
+
+
+/* v15.1: spin skip command — an unobtrusive Nobunaga-style command strip. */
+.skip-spin{
+  position:absolute;
+  z-index:2147483647;
+  pointer-events:auto;
+  left:65.5%;
+  bottom:5%;
+  width:27%;
+  height:13%;
+  min-width:0;
+  margin:0;
+  padding:0 3%;
+  border:0;
+  outline:0;
+  border-radius:0;
+  background:
+    linear-gradient(90deg,
+      rgba(18,8,5,0) 0%,
+      rgba(18,8,5,.22) 8%,
+      rgba(18,8,5,.56) 22%,
+      rgba(18,8,5,.62) 50%,
+      rgba(18,8,5,.56) 78%,
+      rgba(18,8,5,.22) 92%,
+      rgba(18,8,5,0) 100%);
+  color:#fff;
+  font-family:
+    "Yu Kyokasho Yoko",
+    "Yu Kyokasho",
+    "YuKyokasho",
+    "Hiragino Mincho ProN",
+    "Yu Mincho",
+    "MS PMincho",
+    serif;
+  font-size:clamp(21px,2.5vw,46px);
+  font-weight:700;
+  letter-spacing:.12em;
+  line-height:1;
+  white-space:nowrap;
+  text-align:center;
+  text-shadow:
+    0 2px 3px rgba(0,0,0,.95),
+    0 0 5px rgba(255,255,255,.35),
+    0 0 10px rgba(224,165,54,.95),
+    0 0 18px rgba(191,119,24,.78);
+  cursor:pointer;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  backdrop-filter:blur(1.5px);
+  -webkit-backdrop-filter:blur(1.5px);
+}
+.skip-spin[hidden],
+.wheel-screen.result .skip-spin{
+  display:none!important;
+}
+.skip-spin:focus-visible{
+  text-shadow:
+    0 2px 3px rgba(0,0,0,.95),
+    0 0 5px rgba(255,255,255,.55),
+    0 0 12px rgba(241,185,67,1),
+    0 0 22px rgba(205,133,31,.95);
+}
+.skip-spin:active{
+  transform:translateY(1px);
+  background:
+    linear-gradient(90deg,
+      rgba(18,8,5,0) 0%,
+      rgba(18,8,5,.28) 8%,
+      rgba(18,8,5,.68) 22%,
+      rgba(18,8,5,.74) 50%,
+      rgba(18,8,5,.68) 78%,
+      rgba(18,8,5,.28) 92%,
+      rgba(18,8,5,0) 100%);
+}
+@media (orientation:landscape) and (min-aspect-ratio:2/1){
+  .skip-spin{
+    left:66.2%;
+    bottom:5.2%;
+    width:26%;
+    height:13%;
+  }
+}
+
+
+/* v17.3 — result screen composition, phase 1
+   Close in on the winning pocket while keeping the spin-screen wheel unchanged. */
+.wheel-screen.result .wheel-disk{
+  left:-22%!important;
+  top:50%!important;
+  width:156vh!important;
+  height:156vh!important;
+  max-width:none!important;
+  max-height:none!important;
+  transform:rotate(-1.5deg) scaleY(.96)!important;
+  transform-origin:50% 50%!important;
+  z-index:2!important;
+  filter:
+    drop-shadow(0 12px 18px rgba(16,3,0,.9))
+    drop-shadow(0 0 10px rgba(246,180,68,.28))!important;
+}
+
+/* The diagonal result-title experiments are retired. */
+.wheel-screen.result .result-title{
+  transform:none!important;
+}
+
+/* This was dropped from the agreed result-screen information hierarchy. */
+.wheel-screen.result .result-balance{
+  display:none!important;
+}
+
+
+/* v17.6 — result composition pass 2
+   Push the close-up roulette further upward, keep it between the illustration
+   and the verdict UI, and let the coin rain sit on the very top. */
+.wheel-screen.result{
+  background-position:46% center!important;
+}
+.wheel-screen.result .wheel-disk{
+  top:41%!important;
+  left:-22%!important;
+  width:156vh!important;
+  height:156vh!important;
+  z-index:5!important;
+}
+.wheel-screen.result .result-panel{
+  z-index:20!important;
+}
+.wheel-screen.result .result-coin-rain{
+  z-index:40!important;
+  pointer-events:none!important;
+}
+
+
+/* v19.1 — result roulette placement.
+   Slightly enlarge the settled wheel before rebuilding the result backgrounds. */
+.wheel-screen.result{
+  background-position:42% center!important;
+}
+.wheel-screen.result .wheel-disk{
+  top:31%!important;
+  left:-25%!important;
+  width:165vh!important;
+  height:165vh!important;
+  z-index:5!important;
+}
+.wheel-screen.result .result-panel{
+  z-index:20!important;
+}
+.wheel-screen.result .result-coin-rain{
+  z-index:40!important;
+  pointer-events:none!important;
+}
+
+
+/* v17.8 — result illustration shifted further left.
+   Focus on composition: keep the roulette where it is, and open the right side. */
+.wheel-screen.result{
+  background-position:35% center!important;
+}
+
+
+/* v17.9 — approved unified result panel in the lower-right open area.
+   Order: verdict / number+color / net / hit-miss count / next round. */
+.wheel-screen.result .result-panel{
+  left:37%!important;
+  right:1.6%!important;
+  bottom:2.5%!important;
+  width:auto!important;
+  max-width:none!important;
+  height:45%!important;
+  padding:1.0% 1.45%!important;
+
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  grid-template-rows:1.15fr .82fr 1fr .58fr .92fr!important;
+  grid-template-areas:
+    "verdict"
+    "number"
+    "net"
+    "counts"
+    "next"!important;
+  gap:1.2%!important;
+  align-items:center!important;
+  justify-items:center!important;
+
+  overflow:hidden!important;
+  background:
+    linear-gradient(180deg,rgba(8,8,12,.965),rgba(29,7,9,.965))!important;
+  border:3px solid #efc65f!important;
+  border-radius:12px!important;
+  box-shadow:
+    0 0 0 4px #3a1909,
+    inset 0 0 0 2px #7a4917,
+    inset 0 0 34px rgba(222,154,48,.14),
+    0 8px 26px rgba(0,0,0,.72)!important;
+  z-index:20!important;
+}
+
+.wheel-screen.result .result-title{
+  grid-area:verdict!important;
+  position:static!important;
+  inset:auto!important;
+  left:auto!important;
+  top:auto!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+
+  font-family:
+    "Yu Kyokasho Yoko","Yu Kyokasho","YuKyokasho",
+    "Hiragino Mincho ProN","Yu Mincho","MS PMincho",serif!important;
+  font-style:normal!important;
+  font-weight:800!important;
+  font-size:clamp(38px,4.6vw,78px)!important;
+  line-height:1!important;
+  letter-spacing:.05em!important;
+  white-space:nowrap!important;
+  transform:none!important;
+  -webkit-text-stroke:0!important;
+  z-index:auto!important;
+}
+.wheel-screen.win .result-title{
+  color:#f7d86a!important;
+  text-shadow:0 3px 0 #773a09,0 0 12px rgba(255,220,103,.72),0 0 24px rgba(192,112,20,.45)!important;
+}
+.wheel-screen.lose .result-title{
+  color:#edf1ff!important;
+  text-shadow:0 3px 0 #39486b,0 0 10px rgba(199,216,255,.58),0 0 20px rgba(74,95,151,.35)!important;
+}
+.wheel-screen.draw .result-title{
+  color:#ead79e!important;
+  font-size:clamp(31px,3.8vw,66px)!important;
+  text-shadow:0 3px 0 #68552b,0 0 10px rgba(239,215,150,.5)!important;
+}
+
+.wheel-screen.result .result-number{
+  grid-area:number!important;
+  position:static!important;
+  width:82%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:.18em .45em!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:.55em!important;
+  border-top:1px solid rgba(201,147,56,.78)!important;
+  border-bottom:1px solid rgba(201,147,56,.78)!important;
+  background:linear-gradient(90deg,transparent,rgba(20,14,16,.82),transparent)!important;
+}
+.wheel-screen.result .result-number .result-ball{
+  min-width:1.45em!important;
+  padding:.06em .22em!important;
+  font-size:clamp(30px,3.35vw,58px)!important;
+  line-height:1!important;
+  border:2px solid #f2d06c!important;
+  border-radius:7px!important;
+  box-shadow:0 0 10px rgba(255,215,98,.35)!important;
+}
+.wheel-screen.result .result-color{
+  font-size:clamp(17px,1.8vw,31px)!important;
+  font-weight:900!important;
+}
+
+.wheel-screen.result .result-net{
+  grid-area:net!important;
+  position:static!important;
+  width:82%!important;
+  margin:0!important;
+  padding:.05em .3em!important;
+  text-align:center!important;
+  font-family:Georgia,"Yu Mincho",serif!important;
+  font-size:clamp(34px,4.25vw,74px)!important;
+  line-height:1!important;
+  font-weight:900!important;
+  border-top:1px solid rgba(139,77,37,.85)!important;
+  border-bottom:1px solid rgba(139,77,37,.85)!important;
+  background:linear-gradient(90deg,transparent,rgba(91,13,16,.52),transparent)!important;
+}
+
+.wheel-screen.result .result-counts{
+  grid-area:counts!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:center!important;
+  color:#f3e5bd;
+  font-family:"Yu Mincho","Hiragino Mincho ProN",serif;
+  font-size:clamp(15px,1.6vw,28px);
+  font-weight:800;
+  line-height:1.15;
+  letter-spacing:.02em;
+  white-space:nowrap;
+  text-shadow:0 2px 3px rgba(0,0,0,.85);
+  pointer-events:none;
+}
+.wheel-screen.result .result-counts.win{color:#f5d780}
+.wheel-screen.result .result-counts.lose{color:#dce5fa}
+.wheel-screen.result .result-counts.draw{color:#ead9a8}
+
+.wheel-screen.result .result-balance{
+  display:none!important;
+}
+
+.wheel-screen.result #next-round{
+  grid-area:next!important;
+  position:relative!important;
+  width:44%!important;
+  height:82%!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:.2em .8em!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-family:"Yu Mincho",serif!important;
+  font-size:clamp(20px,2.35vw,40px)!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  z-index:30!important;
+}
+.wheel-screen.result #next-round::before{
+  content:none!important;
+  display:none!important;
+}
+
+/* The win coins are intentionally above every visual layer, but never intercept input. */
+.wheel-screen.result .result-coin-rain{
+  z-index:40!important;
+  pointer-events:none!important;
+}
+.wheel-screen.result .result-coin-rain *{
+  pointer-events:none!important;
+}
+
+@media (max-height:500px){
+  .wheel-screen.result .result-panel{
+    height:47%!important;
+    bottom:1.8%!important;
+    padding:.7% 1.1%!important;
+  }
+  .wheel-screen.result .result-title{
+    font-size:clamp(32px,4.2vw,58px)!important;
+  }
+  .wheel-screen.draw .result-title{
+    font-size:clamp(27px,3.5vw,49px)!important;
+  }
+  .wheel-screen.result .result-net{
+    font-size:clamp(29px,3.8vw,54px)!important;
+  }
+  .wheel-screen.result .result-counts{
+    font-size:clamp(13px,1.5vw,21px)!important;
+  }
+  .wheel-screen.result #next-round{
+    font-size:clamp(17px,2.1vw,30px)!important;
+  }
+}
+
+
+/* v18.0 — compact result panel based on the approved paint mockup.
+   Top: verdict. Middle: number/color + net side by side.
+   Bottom: coin-count summary + next-round button. */
+.wheel-screen.result .result-panel{
+  left:48.2%!important;
+  right:1.6%!important;
+  bottom:2.5%!important;
+  width:auto!important;
+  height:40%!important;
+  padding:.85% 1.25%!important;
+
+  grid-template-columns:42% 58%!important;
+  grid-template-rows:1.02fr 1.06fr .48fr .72fr!important;
+  grid-template-areas:
+    "verdict verdict"
+    "number net"
+    "counts counts"
+    "next next"!important;
+  column-gap:1.2%!important;
+  row-gap:1.1%!important;
+}
+
+.wheel-screen.result .result-title{
+  font-size:clamp(35px,4.2vw,72px)!important;
+}
+.wheel-screen.draw .result-title{
+  font-size:clamp(29px,3.45vw,59px)!important;
+}
+
+.wheel-screen.result .result-number{
+  width:92%!important;
+  height:82%!important;
+  padding:.12em .28em!important;
+  justify-self:end!important;
+  align-self:center!important;
+  border-top:1px solid rgba(201,147,56,.72)!important;
+  border-bottom:1px solid rgba(201,147,56,.72)!important;
+  background:linear-gradient(90deg,transparent,rgba(20,14,16,.8),rgba(20,14,16,.45))!important;
+}
+.wheel-screen.result .result-number .result-ball{
+  font-size:clamp(27px,3vw,52px)!important;
+}
+.wheel-screen.result .result-color{
+  font-size:clamp(16px,1.65vw,28px)!important;
+}
+
+.wheel-screen.result .result-net{
+  width:94%!important;
+  height:82%!important;
+  padding:.08em .25em!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  justify-self:start!important;
+  align-self:center!important;
+  font-size:clamp(33px,4.0vw,68px)!important;
+  border-top:1px solid rgba(139,77,37,.8)!important;
+  border-bottom:1px solid rgba(139,77,37,.8)!important;
+  background:linear-gradient(90deg,rgba(91,13,16,.42),rgba(91,13,16,.58),transparent)!important;
+}
+
+.wheel-screen.result .result-counts{
+  font-size:clamp(14px,1.45vw,25px)!important;
+  align-self:center!important;
+}
+
+.wheel-screen.result #next-round{
+  width:72%!important;
+  height:82%!important;
+  justify-self:center!important;
+  font-size:clamp(19px,2.15vw,36px)!important;
+}
+
+@media (max-height:500px){
+  .wheel-screen.result .result-panel{
+    left:48.2%!important;
+    right:1.2%!important;
+    bottom:1.8%!important;
+    height:42%!important;
+    padding:.55% .95%!important;
+  }
+  .wheel-screen.result .result-title{font-size:clamp(30px,3.9vw,54px)!important}
+  .wheel-screen.draw .result-title{font-size:clamp(25px,3.25vw,45px)!important}
+  .wheel-screen.result .result-net{font-size:clamp(28px,3.6vw,50px)!important}
+  .wheel-screen.result .result-counts{font-size:clamp(12px,1.35vw,20px)!important}
+  .wheel-screen.result #next-round{font-size:clamp(16px,1.95vw,28px)!important}
+}
+
+
+/* v18.1 — Nobunaga treats a draw as anything but victory.
+   Keep draw logic/text intact, but use the loss-result illustration. */
+.wheel-screen.draw{
+  background-image:url("./assets/lose.png")!important;
+}
+
+
+/* R19 victory / money-rain koban unification
+   Use the same oval koban artwork as the bet screen.  The rain effect adds
+   only light/size/motion variation; the underlying coin design stays common. */
+.coin-rain .fall-coin{
+  background:transparent url("./assets/coin10000.png") center/contain no-repeat!important;
+  border:0!important;
+  border-radius:0!important;
+  color:transparent!important;
+  text-shadow:none!important;
+  box-shadow:none!important;
+  width:clamp(24px,2.25vw,40px)!important;
+  height:clamp(30px,2.85vw,51px)!important;
+}
+.coin-rain .fall-coin::after{content:none!important}
+.result-coin-rain .fall-coin{
+  width:clamp(32px,3.2vw,56px)!important;
+  height:clamp(40px,4vw,70px)!important;
+  box-shadow:none!important;
+  filter:
+    brightness(var(--coin-bright))
+    saturate(1.12)
+    drop-shadow(0 0 7px rgba(255,247,198,.78))
+    drop-shadow(0 0 14px rgba(255,200,68,.52))
+    drop-shadow(0 3px 7px rgba(49,20,0,.45))!important;
+}
+
+
+/* R19.0.2 — three-touch-flow polish
+   1) richer "銭を持って参れ！" shower
+   2) result->bet pass-through guard visual state
+   3) align the three primary progression buttons around the same thumb target */
+#coin-rain .fall-coin{
+  filter:
+    brightness(var(--coin-bright,1.14))
+    saturate(1.10)
+    drop-shadow(0 0 5px rgba(255,247,198,.72))
+    drop-shadow(0 0 10px rgba(255,193,55,.46))
+    drop-shadow(0 3px 5px rgba(49,20,0,.38))!important;
+}
+.bet-screen.input-guard{
+  pointer-events:none!important;
+}
+
+/* The bet-screen start button already defines the reference thumb target.
+   Move the spin-skip strip to that same right-lower zone. */
+.skip-spin{
+  left:70.8%!important;
+  bottom:2.2%!important;
+  width:27.4%!important;
+  height:12.5%!important;
+}
+@media (orientation:landscape) and (min-aspect-ratio:2/1){
+  .skip-spin{
+    left:70.8%!important;
+    bottom:2.2%!important;
+    width:27.4%!important;
+    height:12.5%!important;
+  }
+}
+
+/* Keep the result button's center close to the same thumb target while
+   leaving it inside the approved compact result panel. */
+.wheel-screen.result #next-round{
+  width:56%!important;
+  justify-self:end!important;
+  margin-right:.5%!important;
+}

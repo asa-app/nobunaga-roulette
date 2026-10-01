@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#120d0b">
+  <meta name="description" content="天下布武 覇王ノ遊戯。お忍び賭場と天下統一を備えた、信長様の戦国遊戯。">
+  <title>天下布武 覇王ノ遊戯</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23180d09' stroke='%23e9bd55' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='20' fill='%23066350' stroke='%23e9bd55' stroke-width='2'/%3E%3Cpath d='M32 12v40M12 32h40M18 18l28 28M46 18 18 46' stroke='%23e9bd55' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23e9bd55'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css?v=21.1">
+  <script defer src="./app.js?v=21.1"></script>
+</head>
+<body>
+  <main id="game" class="game">
+    <section id="title-screen" class="screen title-screen active" aria-label="タイトル画面">
+      <div class="title-shade"></div>
+      <div class="title-content">
+        <div class="title-kicker">天下布武</div>
+        <h1>覇王ノ<br><em>遊戯</em></h1>
+        <div class="title-sub">戦国の世に、運を賭けよ</div>
+        <button id="enter-bet" class="action-button title-action">お忍び賭場へ <span aria-hidden="true">›</span></button>
+        <button id="enter-story" class="outline-button story-action">天下統一　いざ出陣</button>
+      </div>
+      <div class="title-foot">ひとり用 ・ 無料 ・ 横向き推奨</div>
+    </section>
+
+    <section id="story-screen" class="screen story-screen" aria-label="天下統一モード 制作中">
+      <button class="story-hotspot" id="story-to-bet" aria-label="お忍び賭場へ"></button>
+      <button class="story-back" id="story-to-title" aria-label="タイトルへ戻る">‹ タイトルへ</button>
+    </section>
+
+    <section id="bet-screen" class="screen bet-screen" aria-label="お忍び賭場">
+
+
+      <header class="game-header">
+        <div class="brand">お忍び賭場</div>
+        <div class="header-guide">殿、銭を選んで賭け盤へ置いてくだされ</div>
+        <nav class="header-actions" aria-label="画面メニュー">
+          <button id="go-story" class="top-button"><span>天下統一へ</span><small>制作中</small></button>
+          <button id="open-settings" class="top-button">⚙ <span>記録・設定</span></button>
+        </nav>
+      </header>
+
+      <div class="bet-layout">
+        <div class="table-area">
+          <div class="board" id="board">
+            <div class="zero-zone" id="zero-zone"></div>
+            <div id="number-area" class="number-area">
+              <div class="number-grid" id="number-grid"></div>
+              <div class="edge-layer" id="edge-layer"></div>
+              <div class="wager-layer" id="wager-layer" aria-hidden="true"></div>
+            </div>
+            <div class="columns" id="columns"></div>
+          </div>
+          <div class="range-row" id="range-row" aria-label="1～18、19～36への賭け"></div>
+          <div class="dozen-row" id="dozen-row"></div>
+          <div class="outside-row" id="outside-row"></div>
+        </div>
+
+        <aside class="bet-sidebar">
+          <div class="bankroll-box"><span>所持銭</span><strong id="balance">10,000</strong><small>銭</small></div>
+          <button id="add-money" class="money-button">銭を持って参れ！</button>
+          <div class="chip-picker" role="group" aria-label="賭ける銭">
+            <button class="chip copper" data-chip="100" aria-label="銅銭・100銭"><img class="coin-art" src="./assets/coin100.png" alt=""></button>
+            <button class="chip silver" data-chip="1000" aria-label="銀札・1,000銭"><img class="coin-art" src="./assets/coin1000.png" alt=""></button>
+            <button class="chip gold" data-chip="10000" aria-label="小判・10,000銭"><img class="coin-art" src="./assets/coin10000.png" alt=""></button>
+          </div>
+          <button id="open-bets" class="bet-summary">
+            <span>賭け銭 <strong id="wager-total">0銭</strong></span><small>変更 ›</small>
+          </button>
+          <button id="start-spin" class="action-button spin-start" disabled>ルーレット開始</button>
+        </aside>
+      </div>
+      <div id="coin-rain" class="coin-rain" aria-hidden="true"></div>
+    </section>
+
+    <section id="wheel-screen" class="screen wheel-screen" aria-label="ルーレット回転中">
+      <div class="wheel-disk" id="wheel-disk"><svg id="wheel-svg" viewBox="0 0 500 500" role="img" aria-label="数字と玉が動くアメリカ式ルーレット"></svg></div>
+      <div class="spin-stake">賭け銭 <strong id="spin-wager">0銭</strong></div>
+      <button id="skip-spin" class="skip-spin" type="button" hidden aria-label="回転演出を飛ばして勝敗を見る" onclick="return window.__rouletteInlineSkip(event)">勝敗を見せよ</button>
+      <div id="result-panel" class="result-panel" hidden>
+        <div class="result-number" id="result-number"></div>
+        <div class="result-title" id="result-title"></div>
+        <div class="result-net" id="result-net"></div>
+        <div class="result-counts" id="result-counts"></div>
+        <div class="result-balance">所持銭 <strong id="result-balance"></strong> 銭</div>
+        <button id="next-round" class="action-button next-round">次の勝負へ</button>
+      </div>
+      <div id="result-coin-rain" class="coin-rain" aria-hidden="true"></div>
+    </section>
+
+    <div id="modal-backdrop" class="modal-backdrop" hidden>
+      <div id="modal" class="paper-modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+        <div class="modal-header"><div><span class="modal-eyebrow">信長のお忍び賭場</span><h2 id="modal-heading"></h2><p class="modal-instruction" id="modal-instruction" hidden>「戻す」は、その場所に置いた銭を１枚ずつ戻します。</p></div></div>
+        <div id="modal-body" class="modal-body"></div>
+        <div id="modal-footer" class="modal-footer"></div>
+      </div>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <audio id="horn-audio" src="./assets/horagai.mp3" preload="auto"></audio>
+    <audio id="bet-entrance-audio" src="./assets/sfx_bet_entrance.mp3" preload="auto"></audio>
+    <audio id="roulette-audio" src="./assets/roulette.mp3" preload="auto"></audio>
+  </main>
+</body>
+</html>
