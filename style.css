@@ -2296,3 +2296,54 @@ html,body,.game{font-family:"Noto Sans CJK JP","Hiragino Kaku Gothic ProN","Yu G
   justify-self:end!important;
   margin-right:.5%!important;
 }
+
+/* Portrait title artwork: preserve the whole image, with black letterboxing. */
+.title-screen{
+  background:#000!important;
+}
+.title-screen.active{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.title-art{
+  position:relative;
+  width:min(100%,calc(100dvh * 941 / 1672));
+  aspect-ratio:941 / 1672;
+  flex:none;
+  container-type:inline-size;
+}
+.title-art-image{display:block;width:100%;height:100%;object-fit:contain}
+.title-hotspot{
+  position:absolute;
+  left:8.7%;
+  width:82.6%;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+.title-bet-hotspot{top:74.6%;height:9%}
+.title-story-hotspot{top:85%;height:7%}
+.title-sound{
+  position:absolute;
+  left:75%;
+  top:2.9%;
+  width:22%;
+  height:3.7%;
+  margin:0;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #e5bd68;
+  border-radius:2cqw;
+  background:#0b0904;
+  color:#fff1c9;
+  font-size:2.5cqw;
+  font-weight:700;
+  line-height:1;
+  white-space:nowrap;
+}

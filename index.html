@@ -13,15 +13,12 @@
 <body>
   <main id="game" class="game">
     <section id="title-screen" class="screen title-screen active" aria-label="タイトル画面">
-      <div class="title-shade"></div>
-      <div class="title-content">
-        <div class="title-kicker">天下布武</div>
-        <h1>覇王ノ<br><em>遊戯</em></h1>
-        <div class="title-sub">戦国の世に、運を賭けよ</div>
-        <button id="enter-bet" class="action-button title-action">お忍び賭場へ <span aria-hidden="true">›</span></button>
-        <button id="enter-story" class="outline-button story-action">天下統一　いざ出陣</button>
+      <div class="title-art">
+        <img class="title-art-image" src="./assets/title.png" alt="天下布武 覇王ノ遊戯 — 戦国の世に、運を賭けよ">
+        <button id="enter-bet" class="title-hotspot title-bet-hotspot" type="button" aria-label="お忍び賭場へ"></button>
+        <button id="enter-story" class="title-hotspot title-story-hotspot" type="button" aria-label="天下統一 いざ出陣"></button>
+        <button id="title-sound" class="title-sound" type="button" aria-pressed="true">🔊 音声 ON</button>
       </div>
-      <div class="title-foot">ひとり用 ・ 無料 ・ 横向き推奨</div>
     </section>
 
     <section id="story-screen" class="screen story-screen" aria-label="天下統一モード 制作中">

@@ -679,6 +679,8 @@
   }
   function setSound(on,quiet=false){
     state.sound=on;save();
+    const titleSound=$("title-sound");
+    if(titleSound){titleSound.textContent=on?"🔊 音声 ON":"🔇 音声 OFF";titleSound.setAttribute("aria-pressed",String(on))}
     if(!on){stopVoice();stopRolling();$("horn-audio")?.pause?.();$("bet-entrance-audio")?.pause?.()}
     if(on&&!quiet)sound("select");
   }
@@ -1024,6 +1026,7 @@
       requestGameFullscreen();
     };
     $("enter-bet").onclick=enterBet;$("enter-story").onclick=enterStory;
+    $("title-sound").onclick=()=>setSound(!state.sound);
     $("story-to-bet").onclick=enterBet;$("story-to-title").onclick=()=>show("title");
     $("go-story").onclick=enterStory;
     $("open-bets").onclick=()=>openModal("bets");$("open-settings").onclick=()=>openModal("settings");
