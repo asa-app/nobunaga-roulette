@@ -655,6 +655,11 @@ html,body,.game{font-family:"Noto Sans CJK JP","Hiragino Kaku Gothic ProN","Yu G
   transform:translate(-50%,-50%)!important;
 }
 
+/* Lift only the lowest row to leave room for stacked coin bottoms. */
+.outside-row .cell-stack{
+  top:calc(50% - 8px)!important;
+}
+
 /* Remove the circular "target" glow around split/corner markers.
    The coin itself remains softly illuminated. */
 .edge-button.has-wager{
