@@ -655,8 +655,8 @@ html,body,.game{font-family:"Noto Sans CJK JP","Hiragino Kaku Gothic ProN","Yu G
   transform:translate(-50%,-50%)!important;
 }
 
-/* Lift only the lowest row to leave room for stacked coin bottoms. */
-.outside-row .cell-stack{
+/* Lift only stacked coins in the lowest row; single coins stay centered. */
+.outside-row .cell-stack:has(.coin-piece.stacked){
   top:calc(50% - 8px)!important;
 }
 
