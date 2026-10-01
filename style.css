@@ -647,6 +647,14 @@ html,body,.game{font-family:"Noto Sans CJK JP","Hiragino Kaku Gothic ProN","Yu G
   top:44%!important;
 }
 
+/* Keep bottom-row coins vertically centered inside their buttons. */
+.range-row .cell-stack,
+.dozen-row .cell-stack,
+.outside-row .cell-stack{
+  top:50%!important;
+  transform:translate(-50%,-50%)!important;
+}
+
 /* Remove the circular "target" glow around split/corner markers.
    The coin itself remains softly illuminated. */
 .edge-button.has-wager{
