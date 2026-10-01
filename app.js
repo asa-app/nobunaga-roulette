@@ -72,7 +72,7 @@
     toastTimer=setTimeout(()=>el.classList.remove("show"),2200);
   }
   function color(num){return num==="0"||num==="00"?"green":RED.has(+num)?"red":"black"}
-  // Consume only the compatibility click belonging to a handled touch/pen bet.
+  // Consume the follow-up click belonging to an edge bet handled on pointerdown.
   // A new pointer gesture immediately releases the guard, including rapid taps.
   let handledEdgeTap = false;
   document.addEventListener("pointerdown",()=>{handledEdgeTap=false},true);
@@ -88,7 +88,7 @@
     b.dataset.key=def.key;
     if(className.includes("edge-button") || className.includes("zero-split")){
       b.addEventListener("pointerdown",e=>{
-        if(e.pointerType==="touch" || e.pointerType==="pen")handledEdgeTap=true;
+        handledEdgeTap=true;
         e.preventDefault();
         e.stopPropagation();
         place(def.key);
