@@ -2347,3 +2347,40 @@ html,body,.game{font-family:"Noto Sans CJK JP","Hiragino Kaku Gothic ProN","Yu G
   line-height:1;
   white-space:nowrap;
 }
+
+/* Compact Sengoku logo lettering; preserve all existing sizes and positions. */
+.wheel-screen.result .result-title,
+.skip-spin{
+  font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP","MS PMincho",serif!important;
+  font-style:normal!important;
+  font-weight:900!important;
+  paint-order:stroke fill;
+}
+.wheel-screen.win .result-title{
+  color:#ffe48a!important;
+  -webkit-text-stroke:1px #a63219!important;
+  text-shadow:
+    0 -1px 0 #fff7d2,
+    -1.5px 0 0 #efba4b,1.5px 0 0 #efba4b,
+    0 1.5px 0 #efba4b,
+    0 3px 0 #6d1f0b,
+    0 5px 4px #160704,
+    0 0 8px #ffdc76,0 0 16px #d5862e!important;
+}
+.wheel-screen.lose .result-title,
+.wheel-screen.draw .result-title{
+  color:#edf5ff!important;
+  -webkit-text-stroke:1px #3e5c83!important;
+  text-shadow:
+    0 -1px 0 #fff,
+    0 2px 0 #405773,0 4px 3px #0b1422,
+    0 0 7px #aacfff,0 0 13px #476b9d!important;
+}
+.skip-spin{
+  color:#fff0c1!important;
+  -webkit-text-stroke:.8px #85602a;
+  text-shadow:
+    0 -1px 0 #fffaf0,
+    0 2px 0 #65431d,0 4px 3px #100904,
+    0 0 6px #f2d58d,0 0 11px #ad772d;
+}
