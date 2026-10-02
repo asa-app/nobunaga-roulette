@@ -365,8 +365,9 @@
     modalType=type; $("modal-backdrop").hidden=false;
     $("modal").classList.toggle("modal-no-heading",type==="ledger"||type==="rules");
     $("modal").classList.toggle("modal-bets",type==="bets");
+    $("modal").classList.toggle("modal-operations",type==="settings");
     $("modal-instruction").hidden=type!=="bets";
-    $("modal-heading").textContent=({bets:"賭け銭の変更",ledger:"出目帳",rules:"ルーレットのルール",settings:"記録・設定"})[type];
+    $("modal-heading").textContent=({bets:"賭けた銭を変更",ledger:"出目帳",rules:"ルーレットのルール",settings:"記録・設定"})[type];
     if(type==="bets")renderBets();
     if(type==="ledger")renderLedger();
     if(type==="rules")renderRules();
@@ -503,20 +504,48 @@
   }
   function renderSettings(){
     const body=$("modal-body"),foot=$("modal-footer");body.replaceChildren();foot.replaceChildren();
-    const menu=document.createElement("div");menu.className="settings-menu";
-    for(const [label,detail,type] of [["▤ 出目帳","直近100回の出目と回数を見る","ledger"],["？ ルーレットのルール","賭ける範囲と配当を見る","rules"]]){
-      const b=document.createElement("button");b.className="settings-item";b.type="button";
-      const title=document.createElement("strong");title.textContent=label;
-      const desc=document.createElement("small");desc.textContent=detail;
-      b.append(title,desc);b.addEventListener("click",()=>openModal(type));menu.appendChild(b);
+    const menu=document.createElement("div");menu.className="operations-menu";
+    const top=document.createElement("div");top.className="operations-top";
+    function amount(label,value){
+      const card=document.createElement("div");card.className="operations-amount";
+      const title=document.createElement("span");title.textContent=label;
+      const number=document.createElement("strong");number.textContent=fmt(value);
+      const unit=document.createElement("small");unit.textContent="銭";
+      card.append(title,number,unit);return card;
     }
-    const toggle=document.createElement("button");toggle.className="settings-item";toggle.type="button";
-    toggle.setAttribute("aria-pressed",String(state.sound));
-    const text=document.createElement("strong");text.textContent=state.sound?"♪ 音声・効果音：あり":"♪ 音声・効果音：なし";
-    const desc=document.createElement("small");desc.textContent="信長の声・ほら貝・銭・ルーレットの音を切り替える";
-    toggle.append(text,desc);toggle.addEventListener("click",()=>{setSound(!state.sound);renderSettings()});menu.appendChild(toggle);
-    body.appendChild(menu);
-    const done=document.createElement("button");done.className="paper-button";done.textContent="賭場へ戻る";done.addEventListener("click",closeModal);foot.appendChild(done);
+    function button(label,detail,className,action){
+      const b=document.createElement("button");b.type="button";b.className=className;
+      const title=document.createElement("strong");title.textContent=label;b.appendChild(title);
+      if(detail){const desc=document.createElement("small");desc.textContent=detail;b.appendChild(desc)}
+      b.addEventListener("click",action);return b;
+    }
+    const soundToggle=button(state.sound?"音声 ON":"音声 OFF","声・効果音を切り替え","operations-sound",()=>{setSound(!state.sound);renderSettings()});
+    soundToggle.setAttribute("aria-pressed",String(state.sound));
+    top.append(amount("所持銭",state.balance),amount("賭け銭",wagerTotal()),soundToggle);
+    const middle=document.createElement("div");middle.className="operations-middle";
+    const money=button("銭を持って参れ！","所持銭を追加","operations-primary",()=>{addMoney();renderSettings()});
+    money.disabled=state.balance>=MAX_BALANCE;
+    middle.append(money,button("賭けた銭を変更","盤上の銭を戻す","operations-primary",()=>openModal("bets")));
+    const bottom=document.createElement("div");bottom.className="operations-bottom";
+    const coins=document.createElement("div");coins.className="operations-coins";
+    const heading=document.createElement("strong");heading.textContent="賭け銭の変更";
+    const picker=document.createElement("div");picker.className="operations-picker";picker.setAttribute("role","group");picker.setAttribute("aria-label","賭け銭の変更");
+    for(const d of DENOMINATIONS){
+      const b=document.createElement("button");b.type="button";b.className="operations-coin";b.dataset.chip=String(d);
+      b.classList.toggle("selected",selectedChip===d);b.setAttribute("aria-pressed",String(selectedChip===d));b.setAttribute("aria-label",fmt(d)+"銭");
+      const image=document.createElement("img");image.src="./assets/coin"+d+".png";image.alt="";
+      const label=document.createElement("span");label.textContent=fmt(d)+"銭";b.append(image,label);
+      b.addEventListener("click",()=>{selectedChip=d;refresh();sound("select");renderSettings()});picker.appendChild(b);
+    }
+    coins.append(heading,picker);
+    const records=document.createElement("div");records.className="operations-records";
+    records.append(
+      button("出目帳","直近100回の出目と回数","operations-paper",()=>openModal("ledger")),
+      button("ルール","賭ける範囲と配当を確認","operations-paper",()=>openModal("rules"))
+    );
+    const back=button("賭場へ戻る","","operations-back",closeModal);
+    bottom.append(coins,records,back);menu.append(top,middle,bottom);body.appendChild(menu);
+    back.focus();
   }
 
   function ensureAudio(){
@@ -1026,6 +1055,7 @@
     $("story-to-bet").onclick=enterBet;$("story-to-title").onclick=()=>show("title");
     $("go-story").onclick=enterStory;
     $("open-bets").onclick=()=>openModal("bets");$("open-settings").onclick=()=>openModal("settings");
+    $("open-operations").onclick=()=>openModal("settings");
     $("modal-backdrop").addEventListener("click",e=>{if(e.target===$("modal-backdrop"))closeModal()});
     document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modalType)closeModal()});
     document.querySelectorAll("[data-chip]").forEach(b=>b.onclick=()=>{selectedChip=+b.dataset.chip;refresh();sound("select")});
