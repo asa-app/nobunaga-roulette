@@ -479,7 +479,7 @@
               <span>小判</span>
             </div>
           </div>
-          <p class="coin-rule"><strong>1か所に置ける銭は1種類のみ・最大20枚。</strong><br>正確な枚数は「変更」で確認できます。所持銭は9,999,999銭が上限です。</p>
+          <p class="coin-rule"><strong>1か所に置ける銭は1種類のみ・最大20枚。</strong><br>正確な枚数は「賭けた銭を変更」で確認できます。所持銭は9,999,999銭が上限です。</p>
         </section>
 
         <section>
