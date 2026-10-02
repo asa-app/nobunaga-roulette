@@ -329,6 +329,12 @@
   }
 
   function burstMoneyCoins(el){
+    if(el.classList.contains("operations-card-rain")){
+      rain(el,8,false,{waveSpan:.18,cleanupMs:1000,durationMin:.58,durationMax:.76,
+        scaleMin:.9,scaleMax:1.1,leftMin:8,leftRange:78,startTopMin:2,startTopMax:6,
+        driftMin:-6,driftMax:6,rotateMin:35,rotateMax:95});
+      return;
+    }
     // A short, cheerful two-wave koban shower for "銭を持って参れ！".
     // Keep it clearly smaller than the victory rain, but much more noticeable
     // than the old 10-coin effect.

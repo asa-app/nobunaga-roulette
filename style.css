@@ -2549,9 +2549,18 @@ html,body,.game{font-family:"Noto Sans CJK JP","Hiragino Kaku Gothic ProN","Yu G
 .operations-amount{position:relative;overflow:hidden}
 .operations-amount>span,.operations-amount>strong,.operations-amount>small{position:relative;z-index:2}
 .operations-card-rain{z-index:3}
-.operations-card-rain .fall-coin{width:18px!important;height:23px!important}
+.operations-card-rain .fall-coin{
+  width:18px!important;height:23px!important;
+  animation:operations-card-fall var(--coin-duration) ease-in both;
+}
+@keyframes operations-card-fall{
+  0%{top:var(--coin-start-top);opacity:0;transform:rotate(-15deg) scale(var(--coin-scale))}
+  12%{opacity:1}
+  85%{opacity:1}
+  100%{top:calc(100% - 24px);opacity:0;transform:translateX(var(--coin-end-drift)) rotate(var(--coin-end-rotate)) scale(var(--coin-scale))}
+}
 .operations-amount.money-added>strong{animation:operations-money-flash .6s ease-out}
 @keyframes operations-money-flash{
-  0%{color:#fff8d8;text-shadow:0 0 14px #ffe095}
-  100%{color:#ffe29b;text-shadow:none}
+  0%{color:#fff8d8;text-shadow:0 0 14px #ffe095;transform:scale(1.08)}
+  100%{color:#ffe29b;text-shadow:none;transform:scale(1)}
 }
