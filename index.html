@@ -29,14 +29,7 @@
     <section id="bet-screen" class="screen bet-screen" aria-label="お忍び賭場">
 
 
-      <header class="game-header">
-        <div class="brand">お忍び賭場</div>
-        <div class="header-guide">殿、銭を選んで賭け盤へ置いてくだされ</div>
-        <nav class="header-actions" aria-label="画面メニュー">
-          <button id="go-story" class="top-button"><span>天下統一へ</span><small>制作中</small></button>
-          <button id="open-settings" class="top-button">⚙ <span>記録・設定</span></button>
-        </nav>
-      </header>
+
 
       <div class="bet-layout">
         <div class="table-area">
@@ -54,7 +47,7 @@
           <div class="outside-row" id="outside-row"></div>
         </div>
 
-        <aside class="bet-sidebar">
+        <aside class="bet-sidebar" hidden aria-hidden="true">
           <div class="bankroll-box"><span>所持銭</span><strong id="balance">10,000</strong><small>銭</small></div>
           <button id="add-money" class="money-button">銭を持って参れ！</button>
           <div class="chip-picker" role="group" aria-label="賭ける銭">
@@ -62,11 +55,17 @@
             <button class="chip silver" data-chip="1000" aria-label="銀札・1,000銭"><img class="coin-art" src="./assets/coin1000.png" alt=""></button>
             <button class="chip gold" data-chip="10000" aria-label="小判・10,000銭"><img class="coin-art" src="./assets/coin10000.png" alt=""></button>
           </div>
-          <button id="open-bets" class="bet-summary">
-            <span>賭け銭 <strong id="wager-total">0銭</strong></span><small>変更 ›</small>
-          </button>
-          <button id="start-spin" class="action-button spin-start" disabled>ルーレット開始</button>
+          <span>賭け銭 <strong id="wager-total">0銭</strong></span>
         </aside>
+        <nav class="bet-toolbar" aria-label="操作ツールバー・仮配置">
+          <button id="go-story" class="bet-tool" type="button" aria-label="天下統一へ"><span aria-hidden="true">⚑</span><small>天下統一</small></button>
+          <button id="open-settings" class="bet-tool" type="button" aria-label="記録・設定"><span aria-hidden="true">⚙</span><small>記録・設定</small></button>
+          <button class="bet-tool bet-tool-placeholder" type="button" disabled aria-label="賭け操作・配置確認用"><span aria-hidden="true">銭</span><small>賭け操作</small></button>
+          <button id="open-bets" class="bet-tool" type="button" aria-label="賭け銭の変更"><span aria-hidden="true">↺</span><small>賭け変更</small></button>
+          <button id="start-spin" class="bet-tool bet-tool-spin" type="button" disabled aria-label="ルーレット開始">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="#07513b" stroke="#e9c66d" stroke-width="3"/><circle cx="32" cy="32" r="18" fill="#691f1c" stroke="#e9c66d" stroke-width="2"/><path d="M32 5v20M32 39v20M5 32h20M39 32h20M13 13l14 14M37 37l14 14M13 51l14-14M37 27l14-14" stroke="#e9c66d" stroke-width="2"/><circle cx="32" cy="32" r="8" fill="#e9c66d"/><circle cx="44" cy="13" r="4" fill="#fff3cf"/></svg>
+          </button>
+        </nav>
       </div>
       <div id="coin-rain" class="coin-rain" aria-hidden="true"></div>
     </section>
