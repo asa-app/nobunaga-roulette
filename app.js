@@ -521,7 +521,7 @@
     }
     const soundToggle=button(state.sound?"音声 ON":"音声 OFF","声・効果音を切り替え","operations-sound",()=>{setSound(!state.sound);renderSettings()});
     soundToggle.setAttribute("aria-pressed",String(state.sound));
-    top.append(amount("所持銭",state.balance),amount("賭け銭",wagerTotal()),soundToggle);
+    top.append(amount("所持銭",state.balance),amount("賭けた銭",wagerTotal()),soundToggle);
     const middle=document.createElement("div");middle.className="operations-middle";
     const money=button("銭を持って参れ！","所持銭を追加","operations-primary",()=>{addMoney();renderSettings()});
     money.disabled=state.balance>=MAX_BALANCE;
@@ -541,7 +541,7 @@
     const records=document.createElement("div");records.className="operations-records";
     records.append(
       button("出目帳","直近100回の出目と回数","operations-paper",()=>openModal("ledger")),
-      button("ルール","賭ける範囲と配当を確認","operations-paper",()=>openModal("rules"))
+      button("遊び方","賭ける範囲と配当を確認","operations-paper",()=>openModal("rules"))
     );
     const back=button("賭場へ戻る","","operations-back",closeModal);
     bottom.append(coins,records,back);menu.append(top,middle,bottom);body.appendChild(menu);
