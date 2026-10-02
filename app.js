@@ -1056,7 +1056,6 @@
     $("go-story").onclick=enterStory;
     $("open-bets").onclick=()=>openModal("bets");$("open-settings").onclick=()=>openModal("settings");
     $("open-operations").onclick=()=>openModal("settings");
-    $("bet-to-title").onclick=()=>{refundAll();show("title")};
     $("modal-backdrop").addEventListener("click",e=>{if(e.target===$("modal-backdrop"))closeModal()});
     document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modalType)closeModal()});
     document.querySelectorAll("[data-chip]").forEach(b=>b.onclick=()=>{selectedChip=+b.dataset.chip;refresh();sound("select")});
