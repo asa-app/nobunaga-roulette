@@ -266,10 +266,11 @@
   function refundAll(){
     state.balance=Math.min(MAX_BALANCE,state.balance+wagerTotal());state.wagers=[];save();refresh();sound("cancel");renderBets();
   }
-  function addMoney(){
+  function addMoney(rainTarget=$("coin-rain")){
+    if(!rainTarget?.replaceChildren)rainTarget=$("coin-rain");
     if(state.balance>=MAX_BALANCE){toast("所持銭は上限の9,999,999銭じゃ");return}
     const added=Math.min(100000,MAX_BALANCE-state.balance);
-    state.balance+=added;save();refresh();sound("add");playVoice("add",true);burstMoneyCoins($("coin-rain"));
+    state.balance+=added;save();refresh();sound("add");playVoice("add",true);burstMoneyCoins(rainTarget);
   }
   function rain(el,n,home=false,opts={}){
     const {
@@ -521,15 +522,22 @@
     }
     const soundToggle=button(state.sound?"音声 ON":"音声 OFF","声・効果音を切り替え","operations-sound",()=>{setSound(!state.sound);renderSettings()});
     soundToggle.setAttribute("aria-pressed",String(state.sound));
-    top.append(amount("所持銭",state.balance),amount("賭けた銭",wagerTotal()),soundToggle);
+    const bankroll=amount("所持銭",state.balance);
+    const cardRain=document.createElement("div");cardRain.className="coin-rain operations-card-rain";bankroll.appendChild(cardRain);
+    top.append(bankroll,amount("賭けた銭",wagerTotal()),soundToggle);
     const middle=document.createElement("div");middle.className="operations-middle";
-    const money=button("銭を持って参れ！","所持銭を追加","operations-primary",()=>{addMoney();renderSettings()});
+    const money=button("銭を持って参れ！","所持銭を追加","operations-primary",()=>{
+      addMoney(cardRain);
+      bankroll.querySelector("strong").textContent=fmt(state.balance);
+      bankroll.classList.remove("money-added");void bankroll.offsetWidth;bankroll.classList.add("money-added");
+      money.disabled=state.balance>=MAX_BALANCE;
+    });
     money.disabled=state.balance>=MAX_BALANCE;
     middle.append(money,button("賭けた銭を変更","盤上の銭を戻す","operations-primary",()=>openModal("bets")));
     const bottom=document.createElement("div");bottom.className="operations-bottom";
     const coins=document.createElement("div");coins.className="operations-coins";
-    const heading=document.createElement("strong");heading.textContent="賭け銭の変更";
-    const picker=document.createElement("div");picker.className="operations-picker";picker.setAttribute("role","group");picker.setAttribute("aria-label","賭け銭の変更");
+    const heading=document.createElement("strong");heading.textContent="賭ける銭を選ぶ";
+    const picker=document.createElement("div");picker.className="operations-picker";picker.setAttribute("role","group");picker.setAttribute("aria-label","賭ける銭を選ぶ");
     for(const d of DENOMINATIONS){
       const b=document.createElement("button");b.type="button";b.className="operations-coin";b.dataset.chip=String(d);
       b.classList.toggle("selected",selectedChip===d);b.setAttribute("aria-pressed",String(selectedChip===d));b.setAttribute("aria-label",fmt(d)+"銭");
@@ -544,7 +552,10 @@
       button("遊び方","賭ける範囲と配当を確認","operations-paper",()=>openModal("rules"))
     );
     const back=button("賭場へ戻る","","operations-back",closeModal);
-    bottom.append(coins,records,back);menu.append(top,middle,bottom);body.appendChild(menu);
+    const returns=document.createElement("div");returns.className="operations-return";
+    const title=button("タイトルへ","","operations-title",()=>{refundAll();closeModal();show("title")});
+    returns.append(back,title);
+    bottom.append(coins,records,returns);menu.append(top,middle,bottom);body.appendChild(menu);
     back.focus();
   }
 
