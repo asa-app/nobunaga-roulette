@@ -109,7 +109,7 @@
     betDefs.set(key,def);return def;
   }
   function buildBoard(){
-    const zero=$("zero-zone"),grid=$("number-grid"),edge=$("edge-layer"),col=$("columns");
+    const zero=$("zero-zone"),grid=$("number-grid"),edge=$("edge-layer");
     for(const z of ["00","0"])makeButton(zero,z,define("single",[z],35,z+" １数字"),"green");
     const zeroSplit=makeButton(zero,"◆",define("split",["0","00"],17,"0・00 ２数字"),"zero-split");
     zeroSplit.title="0・00 の２数字";
@@ -134,10 +134,6 @@
     for(let r=0;r<2;r++)for(let c=0;c<11;c++){
       const a=c*3+3-r,b=a-1,d=(c+1)*3+3-r;
       overlay([a,b,d,d-1],"corner",8,(c+1)*100/12,(r+1)*100/3,"４数字 "+[a,b,d,d-1].sort((x,y)=>x-y).join("・"));
-    }
-    for(let r=0;r<3;r++){
-      const values=numbers.filter(n=>n%3===((3-r)%3));
-      makeButton(col,"2 to 1",define("column",values,2,(r+1)+"列目 12数字"));
     }
     makeButton($("range-row"),"1～18",define("low",numbers.filter(n=>n<=18),1,"1～18"));
     makeButton($("range-row"),"19～36",define("high",numbers.filter(n=>n>=19),1,"19～36"));
@@ -458,8 +454,8 @@
             <li>出目は <strong>0・00・1～36</strong> の38種類。</li>
             <li>数字の枠内＝<strong>1数字</strong>、枠線＝<strong>2数字</strong>、線の交点＝<strong>4数字</strong>への賭けです。</li>
             <li><strong>0と00の間</strong>にも2数字賭けができます。</li>
-            <li>1～12／13～24／25～36、1～18／19～36、赤／黒、奇数／偶数、右端の「2 to 1」にも賭けられます。</li>
-            <li>0・00が出た場合、赤黒・奇偶・1～18／19～36・12数字・2 to 1は外れです。</li>
+            <li>1～12／13～24／25～36、1～18／19～36、赤／黒、奇数／偶数にも賭けられます。</li>
+            <li>0・00が出た場合、赤黒・奇偶・1～18／19～36・12数字は外れです。</li>
             <li>「変更」で賭け銭を確認できます。「戻す」はその場所の銭を1枚ずつ、「全部戻す」は今回置いた銭をすべて戻します。</li>
           </ul>
 
@@ -492,7 +488,7 @@
               <tr><td>1数字</td><td>35対1</td></tr>
               <tr><td>2数字</td><td>17対1</td></tr>
               <tr><td>4数字</td><td>8対1</td></tr>
-              <tr><td>1～12・13～24・25～36・2 to 1</td><td>2対1</td></tr>
+              <tr><td>1～12・13～24・25～36</td><td>2対1</td></tr>
               <tr><td>赤黒・奇偶・1～18・19～36</td><td>1対1</td></tr>
             </tbody>
           </table>
